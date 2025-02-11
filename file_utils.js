@@ -88,6 +88,10 @@ class FileUtils {
     const imageName = baseName.slice(0, baseName.length - ext.length);
     return imageName;
   }
+
+  static saveFile(filePath, fileContents) {
+    fs.writeFile(filePath, fileContents);
+  }
 }
 
 exports.selectDataDir = async function () {
@@ -120,7 +124,7 @@ exports.selectImageFilePath = async function (dataDir) {
   const imageName = FileUtils.getImageName(imageFilePath);
 
   const ocrOutputFileName = `${imageName}.txt`
-  const ocrOutputFileRelPath = path.join(FileUtils.OcrOutputDir, ocrOutputFileName);
+  let   ocrOutputFileRelPath = path.join(FileUtils.OcrOutputDir, ocrOutputFileName);
   const ocrOutputDir = path.join(dataDir, FileUtils.OcrOutputDir);
   if (!FileUtils.isFileInDir(ocrOutputDir, ocrOutputFileName)) {
     showMessage("No OCR Output file found " + ocrOutputFileRelPath);
@@ -129,10 +133,27 @@ exports.selectImageFilePath = async function (dataDir) {
 
   const editedTextFileName = `${imageName}_mod.txt`
   const editedTextFileRelPath = path.join(FileUtils.EditedOutputDir, editedTextFileName);
+  const editedTextFileDir = path.join(dataDir, FileUtils.EditedOutputDir);
+  if (FileUtils.isFileInDir(editedTextFileDir, editedTextFileName)) {
+    ocrOutputFileRelPath = editedTextFileRelPath;
+  }
 
+  if (FileUtils.isFileInDir())
   return {
     'imageFileRelPath' : imageFileRelPath,
     'ocrOutputFileRelPath' : ocrOutputFileRelPath,
     'editedTextFileRelPath' : editedTextFileRelPath
+  }
+}
+
+exports.saveFile = async function (dataDir, editedTextFileRelPath, fileContents) {
+  const filePath = path.join(dataDir, editedTextFileRelPath);
+  try {
+    await FileUtils.saveFile(filePath, fileContents);
+    showMessage("Saved successfully " + filePath);
+    return true;
+  } catch(ex) {
+    showMessage("Error saving file " + filePath + "\n" + ex);
+    return false;
   }
 }

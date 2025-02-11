@@ -87,8 +87,13 @@ class C /* Components */ {
 class AppState {
   playing = false;
   editing = false;
-  lines = []
-  current = -1
+  lines = [];
+  current = -1;
+
+  dataDir = "";
+  imageFileRelPath = "";
+  ocrOutputFileRelPath = "";
+  editedTextFileRelPath = "";
 };
 
 const S = new AppState();
@@ -96,7 +101,6 @@ const S = new AppState();
 async function onDomParse() {
   C.assignComponents();
   VoiceUtils.listVoices();
-  await FileUtils.getImageFiles();
 }
 
 function cleanUpLines(in_lines) {
@@ -162,6 +166,9 @@ function scrollOtherBar() {
 function populateOcrOutput(iframe) {
   const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
   const iframeInnerHTML = iframeDocument.body.innerHTML;
+  if (!iframeInnerHTML || !iframeInnerHTML.length)
+    return;
+
   const fileLines = StrUtils2.innerHTMLToTextLines(iframeInnerHTML);
 
   let textLines = cleanUpLines(fileLines);
@@ -190,118 +197,6 @@ function hiliteLineNum(lineNum) {
   const element = C.lineDivs[lineNum];
   hiliteLine(element);
   element.scrollIntoView();
-}
-
-class VoiceUtils {
-
-  static allVoices = [];
-  static preferedVoice = null;
-
-  static listVoices() {
-    const fetchVoices = () => {
-      const voices = window.speechSynthesis.getVoices(); // Get the voices
-      voices.forEach(voice => console.log(voice));
-
-      VoiceUtils.allVoices.push(...voices);
-
-      if (window.speechSynthesis.pending)
-        setTimeout(fetchVoices, 1000);
-      else {
-        const voices = VoiceUtils.allVoices.filter(voice => (voice.lang == 'en-IN')).sort();
-        if (voices.length > 0)
-          VoiceUtils.preferedVoice = voices[0]; 
-      }
-    }
-    fetchVoices();
-    window.speechSynthesis.onvoiceschanged = fetchVoices;
-  }
-
-  static expandPuctuations(text) {
-    const punctuationMap = {
-      ".": " period ",
-      ",": " comma ",
-      "!": " exclamation point ",
-      "?": " question mark ",
-      ":": " colon ",
-      ";": " semicolon ",
-      "-": " hyphen ", // Or "dash" depending on context
-      "(": " open parenthesis ",
-      ")": " close parenthesis ",
-      "[": " open bracket ",
-      "]": " close bracket ",
-      "{": " open brace ",
-      "}": " close brace ",
-      "'": " apostrophe ", // Or handle contextually (possessive vs. quotation)
-      "\"": " quotation mark ", // Or handle as double quotes
-      "`": " backtick ",
-      "@": " at symbol ",
-      "#": " number sign ", // Or "hash" or "pound"
-      "$": " dollar sign ",
-      "%": " percent sign ",
-      "^": " caret ",
-      "&": " ampersand ",
-      "*": " asterisk ",
-      "+": " plus sign ",
-      "=": " equals sign ",
-      "/": " slash ",
-      "\\": " backslash ",
-      "|": " vertical bar ",
-      "<": " less than ",
-      ">": " greater than ",
-    };
-  
-    if (!text) return text;
-    let newText = ''
-    for(let i = 0; i < text.length; i++) {
-      let char = text[i];
-      if (punctuationMap[char]) 
-        char = " " + punctuationMap[char] + char + " "
-      newText = newText + char;
-    }
-    return newText;
-  }
-  
-  static speakAsIs(phrase) {
-    console.log("New utterance generated ", phrase);
-
-    const utterance = new SpeechSynthesisUtterance(phrase);
-
-    utterance.rate = 0.33;
-    if (VoiceUtils.preferedVoice)
-      utterance.voice = VoiceUtils.preferedVoice;
-    console.log("Using voice ", VoiceUtils.preferedVoice);
-
-    window.speechSynthesis.speak(utterance);
-    return utterance;
-  }
-
-  static speakPhrase(phrase) {
-    const expandedPhrase = VoiceUtils.expandPuctuations(phrase);
-    const utterance = VoiceUtils.speakAsIs(expandedPhrase);
-    return utterance;
-  }
-
-  static speakPhrasesFrom(phrases, lineNum, onNextPhrase) {
-    console.log("Speak phrases from ", lineNum);
-    if (lineNum >= phrases.length) return;
-
-    const phrase = phrases[lineNum];
-    const utterance = VoiceUtils.speakPhrase(phrase);
-    utterance.onend = () => {
-      setTimeout( () => {
-        onNextPhrase();
-        VoiceUtils.speakPhrasesFrom(phrases, Number(lineNum)+1, onNextPhrase);
-      }, 2000);
-    }
-  }
-
-  static speakPhrases(phrases, onNextPhrase) {
-    VoiceUtils.speakPhrasesFrom(phrases, 0, onNextPhrase);
-  }
-
-  static stopSpeaking() {
-    window.speechSynthesis.cancel();
-  }
 }
 
 function onPlay() {
@@ -338,28 +233,27 @@ function onPause() {
   VoiceUtils.stopSpeaking();
 }
 
+const { ipcRenderer } = require('electron');
+
 async function onSave() {
   const cur_lines = []
   for(let i = 0; i < C.lineDivs.length; i++) {
     const lineDiv = C.lineDivs[i];
     cur_lines.push(lineDiv.textContent);
   }
-  const text = cur_lines.join("\n")
-  saveFile2(text, "UAE0c99101_edited.txt");
+  const contents = cur_lines.join("\n")
+
+  console.log('Making save-file-request');  
+  const saved = await ipcRenderer.invoke('save-file-request', 
+      S.dataDir, S.editedTextFileRelPath, contents);
 }
 
-async function onChooseSaveDirPath() {
-  await pickSaveDirectory();
-  C.dataDirPath.textContent = saveDirectoryHandle.name;
-  console.log("Setting saveDirPath to ", saveDirectoryHandle.name);
-}
-
-const { ipcRenderer } = require('electron');
-
-async function makeSelectDataDirRequest() {
+async function onSelectDataDirClick() {
   console.log('Making select-data-dir-request');
   const dataDir = await ipcRenderer.invoke('select-data-dir-request');
   console.log("Selected ", dataDir);
+
+  S.dataDir = dataDir;
   C.dataDirPath.textContent = dataDir;
 }
 
@@ -372,11 +266,19 @@ async function makeSelectImageFilePathRequest() {
   
   console.log("ImageFile is ", imageFileRelPath);
   C.imageFilePath.textContent = imageFileRelPath;
+  S.imageFileRelPath = imageFileRelPath;
   
   console.log("OcrOutputFile is ", ocrOutputFileRelPath);
   C.ocrOutputFilePath.textContent = ocrOutputFileRelPath;
+  S.ocrOutputFileRelPath = ocrOutputFileRelPath;
 
   console.log("EditedTextFile is ", editedTextFileRelPath);
   C.editedTextFileRelPath.textContent = editedTextFileRelPath;
+  S.editedTextFileRelPath = editedTextFileRelPath;
+}
 
+async function onSelectImageFilePath() {
+  await makeSelectImageFilePathRequest();
+  C.imageDiv.src = `${S.dataDir}/${S.imageFileRelPath}`;
+  C.textIframe.src = `${S.dataDir}/${S.ocrOutputFileRelPath}`
 }

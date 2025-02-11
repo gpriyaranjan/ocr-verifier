@@ -16,7 +16,7 @@ function createWindow () {
     width: screenWidth*0.9,
     height: screenHeight*0.9,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'), // For security (explained later)
+      // preload: path.join(__dirname, 'preload.js'), // For security (explained later)
       nodeIntegration: true, // For security (explained later)
       contextIsolation: false, // For security (explained later)
     }
@@ -24,7 +24,7 @@ function createWindow () {
 
   win.loadFile("synchronized_panels.html");
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 }
 
 function showMessage(message) {
@@ -32,7 +32,7 @@ function showMessage(message) {
     {message : message} )
 }
 
-const {selectDataDir, selectImageFilePath} = require('./file_utils')
+const {selectDataDir, selectImageFilePath, saveFile} = require('./file_utils')
 
 app.whenReady().then( () => {
   createWindow();
@@ -57,6 +57,13 @@ app.whenReady().then( () => {
     }
   });
   
+  ipcMain.handle('save-file-request', async (event, dataDir, editedTextFileRelPath, fileContents) => {
+    try {
+      return await saveFile(dataDir, editedTextFileRelPath, fileContents);
+    } catch(ex) {
+      showMessage("Exception received " + ex.stack);
+    }
+  })
 });
 
 

@@ -7,25 +7,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="synchronized_panels.css">
 
-  <script src="save_file.js"></script>
+  <script src="voice_utils.js"></script>
   <script src="synchronized_panels.js"></script>
 
 </head>
 <body>
   <div id="top-panel">
 
+    <div id="image-panel">
+      <img id="image" alt="image" onLoad="onImageLoadComplete(this)"/>
+      <div id="image-hilite"></div>
+    </div>
+    
     <div id="chooser-panel">
-      <button id="choose-data-dir" class="chooser-button" onclick="makeSelectDataDirRequest()">D</button>
+      <button id="choose-data-dir" class="chooser-button" onclick="onSelectDataDirClick()">D</button>
       <div id="data-dir-path"></div>
-      <button id="choose-image-file" class="chooser-button" onclick="makeSelectImageFilePathRequest()">F</button>
+      <button id="choose-image-file" class="chooser-button" onclick="onSelectImageFilePath()">F</button>
       <div id="image-file-path"></div>
       <div id="text-file-path"></div>
       <div id="edited-text-file-path"></div>
-    </div>
-
-    <div id="image-panel">
-      <img id="image" src="../data/UAE0c99101.gif" alt="image" onLoad="onImageLoadComplete(this)"/>
-      <div id="image-hilite"></div>
     </div>
     
     <div id="lower-panel">
@@ -39,7 +39,7 @@
 
       <div id="text-panel">
         <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div>
-        <iframe id="text-iframe" src="../data/UAE0c99101.txt" hidden onload="populateOcrOutput(this)">
+        <iframe id="text-iframe" hidden onload="populateOcrOutput(this)">
         </iframe>
       </div>
     </div>
