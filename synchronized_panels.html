@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="synchronized_panels.css">
+
+  <script src="save_file.js"></script>
+  <script src="synchronized_panels.js"></script>
+
+</head>
+<body>
+  <div id="top-panel">
+
+    <div id="chooser-panel">
+      <button id="choose-data-dir" class="chooser-button" onclick="makeSelectDataDirRequest()">D</button>
+      <div id="data-dir-path"></div>
+      <button id="choose-image-file" class="chooser-button" onclick="makeSelectImageFilePathRequest()">F</button>
+      <div id="image-file-path"></div>
+      <div id="text-file-path"></div>
+      <div id="edited-text-file-path"></div>
+    </div>
+
+    <div id="image-panel">
+      <img id="image" src="../data/UAE0c99101.gif" alt="image" onLoad="onImageLoadComplete(this)"/>
+      <div id="image-hilite"></div>
+    </div>
+    
+    <div id="lower-panel">
+
+      <div id="icon-panel">
+        <button id="play-button" class="icon" onclick="onPlay()">&#9658;</button>
+        <button id="pause-button" class="icon active" onClick="onPause()">&#9208;</button>
+        <!-- <button id="edit-button" class="icon">&#9998;</button> -->
+        <button id="save-button" class="icon" onclick="onSave()">&#128190;</button> 
+      </div>
+
+      <div id="text-panel">
+        <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div>
+        <iframe id="text-iframe" src="../data/UAE0c99101.txt" hidden onload="populateOcrOutput(this)">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    onDomParse();
+  </script>
+</body>
+</html>
