@@ -49,27 +49,59 @@ function onImageLoadComplete() {
   console.log("Image natural size is ", C.imageDiv.naturalWidth, C.imageDiv.naturalHeight);
 }
 
-class StrUtils2 {
-  static innerHTMLToTextLines(innerHtml) {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = innerHtml;
-    const str = tempDiv.firstChild.childNodes[0].textContent;
-    const lines = str.split("\n");
-    return lines;
+class TextPanel {
+
+  static insertLinesintoTextContainer(in_lines) {
+    const parent = C.textContainer;
+    for(let i = 0; i < in_lines.length; i++) {
+      const lineDiv = document.createElement("div");
+      lineDiv.className = T.LineDivClass;
+      lineDiv.dataset.index = i;
+      lineDiv.textContent = in_lines[i];
+      lineDiv.onclick = () => { hiliteLine(lineDiv); }
+      parent.append(lineDiv);
+  
+      C.lineDivs.push(lineDiv);   
+    }
   }
-}
 
-function insertLinesintoTextContainer(in_lines) {
-  const parent = C.textContainer;
-  for(let i = 0; i < in_lines.length; i++) {
-    const lineDiv = document.createElement("div");
-    lineDiv.className = T.LineDivClass;
-    lineDiv.dataset.index = i;
-    lineDiv.textContent = in_lines[i];
-    lineDiv.onclick = () => { hiliteLine(lineDiv); }
-    parent.append(lineDiv);
+  static populateTextPanel(fileContents) {
 
-    C.lineDivs.push(lineDiv);   
+    let textLines = fileContents.split("\n");
+        textLines = cleanUpLines(textLines);
+    // console.log(textLines);
+    // console.log("Lines after initial cleanup");
+  
+    S.lines = textLines;
+    S.current = 0;
+  
+    this.insertLinesintoTextContainer(S.lines);
+    this.hiliteLineNum(S.current);
+  }
+
+  static hiliteLine(element) {
+    if (S.current != -1)
+      C.lineDivs[S.current].classList.remove("hilite");
+  
+    element.classList.add("hilite");
+    console.log(element.dataset.index);
+    S.current = element.dataset.index;
+  }
+  
+  static hiliteLineNum(lineNum) {
+    if (lineNum < 0 || lineNum >= S.lines.length) {
+      console.log("Invalid line number");
+      return;
+    }
+    const element = C.lineDivs[lineNum];
+    this.hiliteLine(element);
+    element.scrollIntoView();
+  }
+
+  static clearTextPanel() {
+    S.lines = []
+    S.current = -1
+    C.lineDivs = []
   }
 }
 
@@ -77,45 +109,6 @@ function scrollOtherBar() {
   const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
   C.imagePanel.scrollTop = C.textContainer.scrollTop * imageScaleDown * 0.98 + 75;
   console.log('Scroll event trapped ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
-}
-
-function populateOcrOutput(iframe) {
-  console.log("OcrOutput is ready");
-  const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-  const iframeInnerHTML = iframeDocument.body.innerHTML;
-  if (!iframeInnerHTML || !iframeInnerHTML.length)
-    return;
-
-  const fileLines = StrUtils2.innerHTMLToTextLines(iframeInnerHTML);
-
-  let textLines = cleanUpLines(fileLines);
-  // console.log(textLines);
-  // console.log("Lines after initial cleanup");
-
-  S.lines = textLines;
-  S.current = 0;
-
-  insertLinesintoTextContainer(S.lines);
-  hiliteLineNum(S.current);
-}
-
-function hiliteLine(element) {
-  if (S.current != -1)
-    C.lineDivs[S.current].classList.remove("hilite");
-
-  element.classList.add("hilite");
-  console.log(element.dataset.index);
-  S.current = element.dataset.index;
-}
-
-function hiliteLineNum(lineNum) {
-  if (lineNum < 0 || lineNum >= S.lines.length) {
-    console.log("Invalid line number");
-    return;
-  }
-  const element = C.lineDivs[lineNum];
-  hiliteLine(element);
-  element.scrollIntoView();
 }
 
 function onPlay() {
@@ -130,7 +123,7 @@ function onPlay() {
     console.log("S.current updated to ", S.current);
 
     if (S.current < S.lines.length) {
-      hiliteLineNum(S.current);
+      TextPanel.hiliteLineNum(S.current);
     }
   }
 
@@ -140,7 +133,7 @@ function onPlay() {
 
   S.current = (S.current != -1) ? S.current : 0;
   const currElem = C.lineDivs[S.current];
-  hiliteLine(currElem);
+  TextPanel.hiliteLine(currElem);
   VoiceUtils.speakPhrasesFrom(S.lines, S.current, hiliteNextLine);
 }
 
@@ -201,6 +194,13 @@ async function makeSelectImageFilePathRequest() {
   S.editedTextFileRelPath = editedTextFileRelPath;
 }
 
+async function loadFileFromFilePath(filePath) {
+  const fileContents = await ipcRenderer.invoke('read-file-request', filePath);
+  console.log("File contents are ", fileContents);
+  TextPanel.clearTextPanel();
+  TextPanel.populateTextPanel(fileContents);
+}
+
 async function onSelectImageFilePath() {
   await makeSelectImageFilePathRequest();
 
@@ -208,7 +208,7 @@ async function onSelectImageFilePath() {
   console.log("Fetching image file ", imageFilePath)
   C.imageDiv.src = imageFilePath;
 
-  const loadFromFilePath = `${S.dataDir}/${S.ocrOutputFileRelPath}`;
-  console.log("Loading text from ", loadFromFilePath)
-  C.textIframe.src = loadFromFilePath;
+  const loadFilePath = `${S.dataDir}/${S.ocrOutputFileRelPath}`;
+  console.log("Loading text from ", loadFilePath)
+  loadFileFromFilePath(loadFilePath);
 }

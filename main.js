@@ -24,7 +24,7 @@ function createWindow () {
 
   win.loadFile("synchronized_panels.html");
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 }
 
 function showMessage(message) {
