@@ -89,8 +89,8 @@ class FileUtils {
     return imageName;
   }
 
-  static saveFile(filePath, fileContents) {
-    fs.writeFile(filePath, fileContents);
+  static async saveFile(filePath, fileContents) {
+    await fs.writeFile(filePath, fileContents);
   }
 }
 
@@ -150,6 +150,7 @@ exports.selectImageFilePath = async function (dataDir) {
 exports.saveFile = async function (dataDir, editedTextFileRelPath, fileContents) {
   const filePath = path.join(dataDir, editedTextFileRelPath);
   try {
+    console.log("Saving file ", filePath, fileContents);
     await FileUtils.saveFile(filePath, fileContents);
     showMessage("Saved successfully " + filePath);
     return true;
