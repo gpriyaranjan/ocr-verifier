@@ -51,7 +51,8 @@ app.whenReady().then( () => {
 
   ipcMain.handle('select-image-file-path-request', async (event, suggestedPath) => {
     try {
-      return await selectImageFilePath(suggestedPath);
+      const result = await selectImageFilePath(suggestedPath);
+      return result;
     } catch(ex) {
       showMessage("Exception received " + ex.stack);
     }

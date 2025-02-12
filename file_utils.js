@@ -74,8 +74,8 @@ class FileUtils {
 
   static async isFileInDir(dirPath, fileName) {
     try {
-      const filePath = path.resolve(dirPath, fileName);
-      await fs.access(filePath);
+      const filePath = `${dirPath}/${fileName}`;
+      const result = await fs.access(filePath);
       return true;
     } catch(ex) {
       return false;
@@ -126,7 +126,8 @@ exports.selectImageFilePath = async function (dataDir) {
   const ocrOutputFileName = `${imageName}.txt`
   let   ocrOutputFileRelPath = path.join(FileUtils.OcrOutputDir, ocrOutputFileName);
   const ocrOutputDir = path.join(dataDir, FileUtils.OcrOutputDir);
-  if (!FileUtils.isFileInDir(ocrOutputDir, ocrOutputFileName)) {
+  const ocrOutputFildFound = await FileUtils.isFileInDir(ocrOutputDir, ocrOutputFileName)
+  if (!ocrOutputFildFound) {
     showMessage("No OCR Output file found " + ocrOutputFileRelPath);
     return null;
   }
@@ -134,11 +135,11 @@ exports.selectImageFilePath = async function (dataDir) {
   const editedTextFileName = `${imageName}_mod.txt`
   const editedTextFileRelPath = path.join(FileUtils.EditedOutputDir, editedTextFileName);
   const editedTextFileDir = path.join(dataDir, FileUtils.EditedOutputDir);
-  if (FileUtils.isFileInDir(editedTextFileDir, editedTextFileName)) {
+  const editedTextFileFound = await FileUtils.isFileInDir(editedTextFileDir, editedTextFileName);
+  if (editedTextFileFound) {
     ocrOutputFileRelPath = editedTextFileRelPath;
   }
 
-  if (FileUtils.isFileInDir())
   return {
     'imageFileRelPath' : imageFileRelPath,
     'ocrOutputFileRelPath' : ocrOutputFileRelPath,
