@@ -73,9 +73,10 @@ body {
 }
 
 #image {
-  margin: 0;
+  margin-left: 5vw;
+  margin-right: 5vw;
   padding: 0;
-  width: 100vw;
+  width: 90vw;
   overflow-x: scroll;
   overflow-y: scroll;
 }
@@ -104,6 +105,7 @@ body {
 
   position: relative;
   overflow-y: hidden;
+  overflow-x: hidden;
 
   display: flex;
   justify-content: center;
@@ -120,7 +122,7 @@ body {
 }
 
 .line-div {
-  font-size: 28px;
+  font-size: min(28px, 2.1vw);
   line-height: 50px;
 
   white-space: nowrap;
