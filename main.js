@@ -32,7 +32,7 @@ function showMessage(message) {
     {message : message} )
 }
 
-const {selectDataDir, selectImageFilePath, saveFile} = require('./file_utils')
+const {selectDataDir, selectImageFilePath, saveFile, readFile} = require('./file_utils')
 
 app.whenReady().then( () => {
   createWindow();
@@ -58,11 +58,19 @@ app.whenReady().then( () => {
     }
   });
   
-  ipcMain.handle('save-file-request', async (event, dataDir, editedTextFileRelPath, fileContents) => {
+  ipcMain.handle('save-file-request', async (event, dataDir, fileRelPath, fileContents) => {
     try {
-      return await saveFile(dataDir, editedTextFileRelPath, fileContents);
+      return await saveFile(dataDir, fileRelPath, fileContents);
     } catch(ex) {
       showMessage("Exception received " + ex.stack);
+    }
+  })
+
+  ipcMain.handle('read-file-request', async(event, filePath) => {
+    try {
+      return await readFile(filePath);
+    } catch(ex) {
+      showMessage("Exception received " + ex.stack);    
     }
   })
 });

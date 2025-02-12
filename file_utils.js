@@ -92,6 +92,10 @@ class FileUtils {
   static async saveFile(filePath, fileContents) {
     await fs.writeFile(filePath, fileContents);
   }
+
+  static async readFile(filePath) {
+    return await fs.readFile(filePath, 'utf8')
+  }
 }
 
 exports.selectDataDir = async function () {
@@ -147,8 +151,8 @@ exports.selectImageFilePath = async function (dataDir) {
   }
 }
 
-exports.saveFile = async function (dataDir, editedTextFileRelPath, fileContents) {
-  const filePath = path.join(dataDir, editedTextFileRelPath);
+exports.saveFile = async function (dataDir, fileRelPath, fileContents) {
+  const filePath = path.join(dataDir, fileRelPath);
   try {
     console.log("Saving file ", filePath, fileContents);
     await FileUtils.saveFile(filePath, fileContents);
@@ -157,5 +161,14 @@ exports.saveFile = async function (dataDir, editedTextFileRelPath, fileContents)
   } catch(ex) {
     showMessage("Error saving file " + filePath + "\n" + ex);
     return false;
+  }
+}
+
+exports.readFile = async function (filePath) {
+  try {
+    console.log("Reading file ", filePath);
+    return await FileUtils.readFile(filePath)
+  }  catch(ex) {
+    showMessage("Error reading file " + filePath + "\n" + ex);
   }
 }
