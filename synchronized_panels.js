@@ -14,6 +14,22 @@ class AppState {
 
 const S = new AppState();
 
+/*
+function activateToolTips() {
+  tippy('[data-tooltip]', {
+    content: (element) => element.getAttribute('data-tooltip'),
+    placement: (instance) => { // Placement as a function
+        return instance.reference.getAttribute('data-tippy-placement') || 'top'; // Default to 'top'
+    },
+    theme: 'light',
+  });  
+}
+*/
+
+async function onBodyLoad() {
+  // activateToolTips();
+}
+
 async function onDomParse() {
   C.assignComponents();
   VoiceUtils.listVoices();
@@ -49,6 +65,14 @@ function onImageLoadComplete() {
   console.log("Image natural size is ", C.imageDiv.naturalWidth, C.imageDiv.naturalHeight);
 }
 
+class GifPanel {
+
+  static scrollToLineNum(lineNum) {
+    const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
+    C.imagePanel.scrollTop = lineNum * 50 + imageScaleDown + 75;
+  }
+}
+
 class TextPanel {
 
   static insertLinesintoTextContainer(in_lines) {
@@ -58,7 +82,7 @@ class TextPanel {
       lineDiv.className = T.LineDivClass;
       lineDiv.dataset.index = i;
       lineDiv.textContent = in_lines[i];
-      lineDiv.onclick = () => { hiliteLine(lineDiv); }
+      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); }
       parent.append(lineDiv);
   
       C.lineDivs.push(lineDiv);   
@@ -132,8 +156,9 @@ function onPlay() {
   C.pauseButton.classList.remove(T.ActiveClass);
 
   S.current = (S.current != -1) ? S.current : 0;
-  const currElem = C.lineDivs[S.current];
-  TextPanel.hiliteLine(currElem);
+  TextPanel.hiliteLineNum(S.current);
+  GifPanel.scrollToLineNum(S.current);
+  
   VoiceUtils.speakPhrasesFrom(S.lines, S.current, hiliteNextLine);
 }
 
