@@ -132,7 +132,7 @@ class TextPanel {
 function scrollOtherBar() {
   const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
   C.imagePanel.scrollTop = C.textContainer.scrollTop * imageScaleDown * 0.98 + 75;
-  console.log('Scroll event trapped ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
+  console.log('Scroll event triggered ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
 }
 
 function onPlay() {
@@ -148,6 +148,7 @@ function onPlay() {
 
     if (S.current < S.lines.length) {
       TextPanel.hiliteLineNum(S.current);
+      GifPanel.scrollToLineNum(S.current);
     }
   }
 
@@ -237,3 +238,4 @@ async function onSelectImageFilePath() {
   console.log("Loading text from ", loadFilePath)
   loadFileFromFilePath(loadFilePath);
 }
+
