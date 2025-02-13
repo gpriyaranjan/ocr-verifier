@@ -28,6 +28,14 @@ class T {
 
   static SettingsPanelId = 'settings-panel';
 
+  static GifOffsetId = 'gif-offset';
+  static GifOffsetTitleId = 'gif-offset-title';
+  static GifOffsetSpinBoxId = 'gif-offset-spin-box';
+  
+  static GifScaleId = 'gif-scale';
+  static GifScaleTitleId = 'gif-scale-title';
+  static GifScaleSpinBoxId = 'gif-scale-spin-box';
+
   static SpeechSpeedId = 'speech-speed';
   static SpeechSpeedIconId = 'speech-speed-icon';
   static SpeechSpeedSpinBoxId = 'speech-speed-spin-box';
@@ -65,11 +73,19 @@ class C /* Components */ {
 
   static settingsPanel;
 
-  static speechSpeed;
+  static gifOffsetItem;
+  static gifOffsetTitle;
+  static gifOffsetSpinBox;
+
+  static gifScaleItem;
+  static gifScaleTitle;
+  static gifScaleSpinBox;
+
+  static speechSpeedItem;
   static speechSpeedIcon;
   static speechSpeedSpinBox;
 
-  static speechInterline;
+  static speechInterlineItem;
   static speechInterlineIcon;
   static speechInterlinePause;
 
@@ -102,11 +118,19 @@ class C /* Components */ {
     
     C.settingsPanel = document.getElementById(T.SettingsPanelId);
 
-    C.speechSpeed = document.getElementById(T.SpeechSpeedId);
+    C.gifOffsetItem = document.getElementById(T.GifOffsetId);
+    C.gifOffsetTitle = document.getElementById(T.GifOffsetTitleId);
+    C.gifOffsetSpinBox = document.getElementById(T.GifOffsetSpinBoxId);
+
+    C.gifScaleItem = document.getElementById(T.GifScaleId);
+    C.gifScaleTitle = document.getElementById(T.GifScaleTitleId);
+    C.gifScaleSpinBox = document.getElementById(T.GifScaleSpinBoxId);
+
+    C.speechSpeedItem = document.getElementById(T.SpeechSpeedId);
     C.speechSpeedIcon = document.getElementById(T.SpeechSpeedIconId);
     C.speechSpeedSpinBox = document.getElementById(T.SpeechSpeedSpinBoxId);
   
-    C.speechInterline = document.getElementById(T.SpeechInterlineId);
+    C.speechInterlineItem = document.getElementById(T.SpeechInterlineId);
     C.speechInterlineIcon = document.getElementById(T.SpeechInterlineIconId);
     C.speechInterlinePause = document.getElementById(T.SpeechInterlinePauseId);
 

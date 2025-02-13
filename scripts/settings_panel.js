@@ -23,31 +23,37 @@ class SettingsPanel {
     }
   }
 
+  static onGifOffsetSet() {
+    const gifOffset = C.gifOffsetSpinBox.textContent;
+    console.log("Setting the gifOffset ", gifOffset);
+    GifPanel.gifOffset = gifOffset;
+    GifPanel.scrollToCurrent();
+  }
+
+  static addEnterHandler(element) {
+    element.addEventListener('keydown', function(event) {
+      if (event.key == 'Enter') {
+        event.stopPropagation();
+        element.blur();
+      }
+    })
+  }
+
+  static addBlurHandler(element, handler) {
+    element.addEventListener('blur', function(event) {
+      handler();
+    })
+  }
+
   static setEventHandlers() {
 
     console.log("setSettingsPanelCallbacks called");
 
-    C.speechSpeedSpinBox.addEventListener('keydown', function(event) {
-      if (event.key == 'Enter') {
-        event.stopPropagation();
-        C.speechSpeedSpinBox.blur();
-      }
-    })
-  
-    C.speechSpeedSpinBox.addEventListener('blur', function(event) {
-      SettingsPanel.onSpeechSpeedSet();
-    })
+    this.addEnterHandler(C.speechSpeedSpinBox);
+    this.addBlurHandler(C.speechSpeedSpinBox, () => SettingsPanel.onSpeechSpeedSet());
 
-    C.speechInterlinePause.addEventListener('keydown', function(event) {
-      if (event.key == 'Enter') {
-        event.stopPropagation();
-        C.speechInterlinePause.blur();
-      }
-      event.preventDefault();
-    })
-      
-    C.speechInterlinePause.addEventListener('blur', function(event) {
-      SettingsPanel.onSpeechInterlinePauseSet();
-    })
+    this.addEnterHandler(C.speechInterlinePause);
+    this.addBlurHandler(C.speechInterlinePause, () => SettingsPanel.onSpeechInterlinePauseSet());
+    
   }
 }

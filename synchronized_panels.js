@@ -55,7 +55,7 @@ class TextPanel {
       lineDiv.className = T.LineDivClass;
       lineDiv.dataset.index = i;
       lineDiv.textContent = in_lines[i];
-      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); }
+      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); }
       parent.append(lineDiv);
   
       C.lineDivs.push(lineDiv);   
@@ -103,8 +103,11 @@ class TextPanel {
 }
 
 function scrollOtherBar() {
+  /*
   const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
   C.imagePanel.scrollTop = C.textContainer.scrollTop * imageScaleDown * 0.98 + 75;
+  */
+  GifPanel.scrollToOffset(C.textContainer.scrollTop);
   console.log('Scroll event triggered ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
 }
 
@@ -121,7 +124,7 @@ function onPlay() {
 
     if (S.current < S.lines.length) {
       TextPanel.hiliteLineNum(S.current);
-      GifPanel.scrollToLineNum(S.current);
+      // GifPanel.scrollToLineNum(S.current);
     }
   }
 
@@ -131,7 +134,7 @@ function onPlay() {
 
   S.current = (S.current != -1) ? S.current : 0;
   TextPanel.hiliteLineNum(S.current);
-  GifPanel.scrollToLineNum(S.current);
+  // GifPanel.scrollToLineNum(S.current);
   
   VoiceUtils.speakPhrasesFrom(S.lines, S.current, hiliteNextLine);
 }

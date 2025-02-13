@@ -25,9 +25,40 @@
 <body onload="onBodyLoad()">
   <div id="top-panel">
 
-    <div id="image-panel">
-      <img id="image" alt="image" onLoad="onImageLoadComplete(this)"/>
-      <div id="image-hilite"></div>
+
+    <div id="upper-panel">
+
+      <div id="settings-panel">
+
+        <div id="gif-offset" class="settings-item">
+          <div id="gif-offset-title" class="settings-heading-text">Offset</div>
+          <input id="gif-offset-spin-box" class="settings-value" type="number"
+            max="10" min="-10" value="0"/>
+        </div>
+        
+        <div id="gif-scale" class="settings-item">
+          <div id="scale-title" class="settings-heading-text">Scale</div>
+          <input id="scale-spin-box" class="settings-value" type="number"
+              max="110" min="90" value="100"/>
+        </div>
+
+        <div id="speech-speed" class="settings-item">
+          <div id="speech-speed-icon" class="fa fa-tachometer settings-heading-icon"></div>
+          <input id="speech-speed-spin-box" class="settings-value" type="number" 
+            min="10" max="200" step="10" value="50"/>
+        </div>
+
+        <div id="speech-interline" class="settings-item">
+          <div id="speech-interline-icon" class="settings-heading-text">&#x1F914;</div>
+          <input id="speech-interline-pause" class="settings-value" type="number" value="3"></input>
+        </div>
+      </div>
+
+      <div id="image-panel">
+        <img id="image" alt="image" onLoad="onImageLoadComplete(this)"/>
+        <div id="image-hilite"></div>
+      </div>
+
     </div>
     
     <div id="chooser-panel">
@@ -54,22 +85,10 @@
       </div>
 
       <div id="text-panel">
-        <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div>
+        <!-- <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div> -->
+        <div id="text-container"  contenteditable="true"></div>
       </div>
 
-      <div id="settings-panel">
-
-        <div id="speech-speed">
-          <div id="speech-speed-icon" class="fa fa-tachometer"></div>
-          <input id="speech-speed-spin-box" type="number" min="10" max="200" step="10" value="50"/>
-        </div>
-
-        <div id="speech-interline">
-          <div id="speech-interline-icon">&#x1F914;</div>
-          <input id="speech-interline-pause" type="number" value="3"></div>
-        </div>
-
-      </div>
     </div>
   </div>
 
