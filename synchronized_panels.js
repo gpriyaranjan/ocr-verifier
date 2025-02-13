@@ -1,16 +1,11 @@
 "use strict";
 
-/*
 function activateToolTips() {
   tippy('[data-tooltip]', {
     content: (element) => element.getAttribute('data-tooltip'),
-    placement: (instance) => { // Placement as a function
-        return instance.reference.getAttribute('data-tippy-placement') || 'top'; // Default to 'top'
-    },
     theme: 'light',
   });  
 }
-*/
 
 async function onBodyLoad() {
   VoiceUtils.listVoices();
@@ -20,6 +15,7 @@ async function onBodyLoad() {
 
 function onDomParse() {
   C.assignComponents();
+  activateToolTips();
 }
 
 function cleanUpLines(in_lines) {

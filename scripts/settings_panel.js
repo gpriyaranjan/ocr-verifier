@@ -23,13 +23,6 @@ class SettingsPanel {
     }
   }
 
-  static onGifOffsetSet() {
-    const gifOffset = C.gifOffsetSpinBox.textContent;
-    console.log("Setting the gifOffset ", gifOffset);
-    GifPanel.gifOffset = gifOffset;
-    GifPanel.scrollToCurrent();
-  }
-
   static addEnterHandler(element) {
     element.addEventListener('keydown', function(event) {
       if (event.key == 'Enter') {

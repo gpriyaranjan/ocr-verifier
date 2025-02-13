@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" /> -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
 
   <link rel="stylesheet" href="synchronized_panels.css">
 
-  <!-- <script src="https://unpkg.com/tippy.js@6/dist/tippy.umd.min.js"></script> -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
 
   <script src="scripts/voice_utils.js"></script>
 
@@ -30,33 +31,23 @@
 
       <div id="settings-panel">
 
-        <div id="gif-offset" class="settings-item">
-          <div id="gif-offset-title" class="settings-heading-text">Offset</div>
-          <input id="gif-offset-spin-box" class="settings-value" type="number"
-            max="10" min="-10" value="0"/>
-        </div>
-        
-        <div id="gif-scale" class="settings-item">
-          <div id="scale-title" class="settings-heading-text">Scale</div>
-          <input id="scale-spin-box" class="settings-value" type="number"
-              max="110" min="90" value="100"/>
-        </div>
-
         <div id="speech-speed" class="settings-item">
-          <div id="speech-speed-icon" class="fa fa-tachometer settings-heading-icon"></div>
+          <div id="speech-speed-icon" class="fa fa-tachometer settings-heading-icon"
+                data-tooltip="Speed of the voice (100=normal)"></div>
           <input id="speech-speed-spin-box" class="settings-value" type="number" 
             min="10" max="200" step="10" value="50"/>
         </div>
 
         <div id="speech-interline" class="settings-item">
-          <div id="speech-interline-icon" class="settings-heading-text">&#x1F914;</div>
+          <div id="speech-interline-icon" class="settings-heading-text"
+                data-tooltip="Voice gap between one line and the next">&#x1F914;</div>
           <input id="speech-interline-pause" class="settings-value" type="number" value="3"></input>
         </div>
       </div>
 
       <div id="image-panel">
-        <img id="image" alt="image" onLoad="onImageLoadComplete(this)"/>
-        <div id="image-hilite"></div>
+        <img id="image" alt="image" tooltip="Handwritten image" onLoad="onImageLoadComplete(this)"/>
+        <div id="image-hilite" tooltip="Current line"></div>
       </div>
 
     </div>
@@ -64,23 +55,37 @@
     <div id="chooser-panel">
 
       <button id="choose-data-dir" class="chooser-button" onclick="onSelectDataDirClick()"
-          data-tooltip="The data directory">&#x1F4C1;</button>
+          data-tooltip="Select data directory">&#x1F4C1;</button>
 
-      <div id="data-dir-path" class="chooser-value"></div>
-      <button id="choose-image-file" class="chooser-button" onclick="onSelectImageFilePath()">&#x1F4C4;</button>
-      <div id="image-file-path" class="chooser-value"></div>
-      <div id="text-file-path" class="chooser-value"></div>
-      <div id="edited-text-file-path" class="chooser-value"></div>
+      <div id="data-dir-path" class="chooser-value"
+          data-tooltip="Current data directory"></div>
+
+      <button id="choose-image-file" class="chooser-button" onclick="onSelectImageFilePath()"
+          data-tooltip="Select the handwritten image file">&#x1F4C4;</button>
+
+      <div id="image-file-path" class="chooser-value"
+          data-tooltip="Location of current image file"></div>
+
+      <div id="text-file-path" class="chooser-value"
+          data-tooltip="Location of OCR generated text file"></div>
+
+      <div id="edited-text-file-path" class="chooser-value"
+          data-tooltip="Location of file to save changes"></div>
+
     </div>
     
     <div id="lower-panel">
 
       <div id="icon-panel">
-        <button id="play-button" class="icon" onclick="onPlay()">&#9658;</button>
-        <button id="pause-button" class="icon active" onClick="onPause()">&#9208;</button>
+        <button id="play-button" class="icon" onclick="onPlay()"
+            data-tooltip="Speak the OCR contents starting at highlighted line">&#9658;</button>
+
+        <button id="pause-button" class="icon active" onClick="onPause()"
+            data-tooltip="Pause the speaking">&#9208;</button>
 
         <!-- <button id="edit-button" class="icon">&#9998;</button> -->
-        <button id="save-button" class="icon" onclick="onSave()">&#128190;</button>
+        <button id="save-button" class="icon" onclick="onSave()"
+            data-tooltip="Save the changes made">&#128190;</button>
         
       </div>
 
