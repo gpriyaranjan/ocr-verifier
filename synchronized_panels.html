@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body onload="onBodyLoad()">
   <div id="top-panel">
 
     <div id="image-panel">
@@ -59,7 +59,7 @@
           <input id="speech-speed-spin-box" type="number" min="10" max="100" step="10" value="50"/>
         </div>
 
-        <div id="speech-interline-pause">
+        <div id="speech-interline">
           <div id="speech-interline-icon">&#x1F914;</div>
           <input id="speech-interline-pause" type="number" value="3"></div>
         </div>
@@ -69,9 +69,7 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      onDomParse();
-    });
+    onDomParse();
   </script>
 </body>
 </html>

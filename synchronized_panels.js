@@ -27,12 +27,35 @@ function activateToolTips() {
 */
 
 async function onBodyLoad() {
-  // activateToolTips();
+  VoiceUtils.listVoices();
+  setSettingsPanelCallbacks();
 }
 
-async function onDomParse() {
+function setSettingsPanelCallbacks() {
+
+  console.log("setSettingsPanelCallbacks called");
+
+  C.speechSpeedSpinBox.addEventListener('keydown', function(event) {
+    const speechSpeed = C.speechSpeedSpinBox.value;
+    console.log("Setting speech speed to ", speechSpeed);
+    if (event.key == 'Enter') {
+      VoiceUtils.setUtteranceRate(speechSpeed);
+    }
+    event.preventDefault();
+  })
+
+  C.speechInterlinePause.addEventListener('keydown', function(event) {
+    if (event.key == 'Enter') {
+      const interLinePause = C.speechInterlinePause.value;
+      console.log("Setting interLinePause to ", interLinePause)
+      VoiceUtils.setInterLinePause(interLinePause);
+    }
+    event.preventDefault();
+  })
+}
+
+function onDomParse() {
   C.assignComponents();
-  VoiceUtils.listVoices();
 }
 
 function cleanUpLines(in_lines) {
@@ -197,6 +220,10 @@ async function onSelectDataDirClick() {
 
   S.dataDir = dataDir;
   C.dataDirPath.textContent = dataDir;
+
+  C.imageFilePath.textContent = "";
+  C.ocrOutputFilePath.textContent = "";
+  C.editedTextFileRelPath.textContent = "";
 }
 
 async function makeSelectImageFilePathRequest() {

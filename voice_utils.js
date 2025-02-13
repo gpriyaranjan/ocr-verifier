@@ -4,6 +4,17 @@ class VoiceUtils {
   static allVoices = [];
   static preferedVoice = null;
 
+  static interLinePause = 3;
+  static utteranceRate = 0.33;
+
+  static setUtteranceRate(utteranceRate) {
+    this.utteranceRate = utteranceRate;
+  }
+
+  static setInterLinePause(interLinePause) {
+    this.interLinePause = interLinePause;
+  }
+
   static listVoices() {
     const fetchVoices = () => {
       const voices = window.speechSynthesis.getVoices(); // Get the voices
@@ -73,7 +84,7 @@ class VoiceUtils {
 
     const utterance = new SpeechSynthesisUtterance(phrase);
 
-    utterance.rate = 0.33;
+    utterance.rate = this.utteranceRate;
     if (VoiceUtils.preferedVoice)
       utterance.voice = VoiceUtils.preferedVoice;
     console.log("Using voice ", VoiceUtils.preferedVoice);
@@ -98,7 +109,7 @@ class VoiceUtils {
       setTimeout( () => {
         onNextPhrase();
         VoiceUtils.speakPhrasesFrom(phrases, Number(lineNum)+1, onNextPhrase);
-      }, 2000);
+      }, this.interLinePause*1000);
     }
   }
 

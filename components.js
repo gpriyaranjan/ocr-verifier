@@ -26,6 +26,16 @@ class T {
   // static EditButtonId = 'edit-button';
   static SaveButtonId = 'save-button';
 
+  static SettingsPanelId = 'settings-panel';
+
+  static SpeechSpeedId = 'speech-speed';
+  static SpeechSpeedIconId = 'speech-speed-icon';
+  static SpeechSpeedSpinBoxId = 'speech-speed-spin-box';
+
+  static SpeechInterlineId = 'speech-interline';
+  static SpeechInterlineIconId = 'speech-interline-icon';
+  static SpeechInterlinePauseId = 'speech-interline-pause';
+
 };
 
 class C /* Components */ {
@@ -53,6 +63,16 @@ class C /* Components */ {
   static editButton;
   static saveButton;
 
+  static settingsPanel;
+
+  static speechSpeed;
+  static speechSpeedIcon;
+  static speechSpeedSpinBox;
+
+  static speechInterline;
+  static speechInterlineIcon;
+  static speechInterlinePause;
+
   static assignComponents() {
     C.topPanel = document.getElementById(T.TopPanelId);
   
@@ -78,6 +98,17 @@ class C /* Components */ {
     C.playButton = document.getElementById(T.PlayButtonId);
     C.pauseButton = document.getElementById(T.PauseButtonId);
     C.editButton = document.getElementById(T.EditButtonId);
-    C.saveButton = document.getElementById(T.SaveButtonId);  
+    C.saveButton = document.getElementById(T.SaveButtonId);
+    
+    C.settingsPanel = document.getElementById(T.SettingsPanelId);
+
+    C.speechSpeed = document.getElementById(T.SpeechSpeedId);
+    C.speechSpeedIcon = document.getElementById(T.SpeechSpeedIconId);
+    C.speechSpeedSpinBox = document.getElementById(T.SpeechSpeedSpinBoxId);
+  
+    C.speechInterline = document.getElementById(T.SpeechInterlineId);
+    C.speechInterlineIcon = document.getElementById(T.SpeechInterlineIconId);
+    C.speechInterlinePause = document.getElementById(T.SpeechInterlinePauseId);
+
   }
 };
