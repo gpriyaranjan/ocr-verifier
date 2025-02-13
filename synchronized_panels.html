@@ -11,8 +11,13 @@
 
   <!-- <script src="https://unpkg.com/tippy.js@6/dist/tippy.umd.min.js"></script> -->
 
-  <script src="voice_utils.js"></script>
-  <script src="components.js"></script>
+  <script src="scripts/voice_utils.js"></script>
+
+  <script src="scripts/app_state.js"></script>
+  <script src="scripts/components.js"></script>
+
+  <script src="scripts/gif_panel.js"></script>
+  <script src="scripts/settings_panel.js"></script>
   <script src="synchronized_panels.js"></script>
 
 </head>
@@ -56,7 +61,7 @@
 
         <div id="speech-speed">
           <div id="speech-speed-icon" class="fa fa-tachometer"></div>
-          <input id="speech-speed-spin-box" type="number" min="10" max="100" step="10" value="50"/>
+          <input id="speech-speed-spin-box" type="number" min="10" max="200" step="10" value="50"/>
         </div>
 
         <div id="speech-interline">

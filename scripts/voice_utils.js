@@ -5,7 +5,7 @@ class VoiceUtils {
   static preferedVoice = null;
 
   static interLinePause = 3;
-  static utteranceRate = 0.33;
+  static utteranceRate = 50;
 
   static setUtteranceRate(utteranceRate) {
     this.utteranceRate = utteranceRate;
@@ -84,7 +84,7 @@ class VoiceUtils {
 
     const utterance = new SpeechSynthesisUtterance(phrase);
 
-    utterance.rate = this.utteranceRate;
+    utterance.rate = this.utteranceRate / 100.0;
     if (VoiceUtils.preferedVoice)
       utterance.voice = VoiceUtils.preferedVoice;
     console.log("Using voice ", VoiceUtils.preferedVoice);

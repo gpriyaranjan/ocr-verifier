@@ -1,19 +1,5 @@
 "use strict";
 
-class AppState {
-  playing = false;
-  editing = false;
-  lines = [];
-  current = -1;
-
-  dataDir = "";
-  imageFileRelPath = "";
-  ocrOutputFileRelPath = "";
-  editedTextFileRelPath = "";
-};
-
-const S = new AppState();
-
 /*
 function activateToolTips() {
   tippy('[data-tooltip]', {
@@ -28,31 +14,9 @@ function activateToolTips() {
 
 async function onBodyLoad() {
   VoiceUtils.listVoices();
-  setSettingsPanelCallbacks();
+  SettingsPanel.setEventHandlers();
 }
 
-function setSettingsPanelCallbacks() {
-
-  console.log("setSettingsPanelCallbacks called");
-
-  C.speechSpeedSpinBox.addEventListener('keydown', function(event) {
-    const speechSpeed = C.speechSpeedSpinBox.value;
-    console.log("Setting speech speed to ", speechSpeed);
-    if (event.key == 'Enter') {
-      VoiceUtils.setUtteranceRate(speechSpeed);
-    }
-    event.preventDefault();
-  })
-
-  C.speechInterlinePause.addEventListener('keydown', function(event) {
-    if (event.key == 'Enter') {
-      const interLinePause = C.speechInterlinePause.value;
-      console.log("Setting interLinePause to ", interLinePause)
-      VoiceUtils.setInterLinePause(interLinePause);
-    }
-    event.preventDefault();
-  })
-}
 
 function onDomParse() {
   C.assignComponents();
@@ -78,22 +42,8 @@ function cleanUpLines(in_lines) {
   return out_lines;
 }
 
-function scrollImageUp() {
-  C.imagePanel.scrollTop = 100;
-}
-
 function onImageLoadComplete() {
-  scrollImageUp();
-  console.log("Image size is ", C.imageDiv.width, C.imageDiv.height);
-  console.log("Image natural size is ", C.imageDiv.naturalWidth, C.imageDiv.naturalHeight);
-}
-
-class GifPanel {
-
-  static scrollToLineNum(lineNum) {
-    const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
-    C.imagePanel.scrollTop = lineNum * 50 + imageScaleDown + 75;
-  }
+  GifPanel.scrollToLineNum(0);
 }
 
 class TextPanel {
