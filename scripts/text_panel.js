@@ -7,7 +7,7 @@ class TextPanel {
       lineDiv.className = T.LineDivClass;
       lineDiv.dataset.index = i;
       lineDiv.textContent = in_lines[i];
-      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); }
+      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); VoiceUtils.stopSpeaking(); }
       parent.append(lineDiv);
   
       C.lineDivs.push(lineDiv);   
