@@ -7,6 +7,8 @@ class VoiceUtils {
   static interLinePause = 3;
   static utteranceRate = 50;
 
+  static speakingFlag = false;
+
   static setUtteranceRate(utteranceRate) {
     this.utteranceRate = utteranceRate;
   }
@@ -99,18 +101,38 @@ class VoiceUtils {
     return utterance;
   }
 
-  static speakPhrasesFrom(phrases, lineNum, onNextPhrase) {
-    console.log("Speak phrases from ", lineNum);
-    if (lineNum >= phrases.length) return;
+  static speakPhrasesFromP(phrases, lineNum, onNextPhrase) {
+    // console.log("Speak phrases from private ", lineNum, "speak flag = ", VoiceUtils.speakingFlag);
+
+    if (lineNum >= phrases.length) {
+      console.log("End speaking as phrases have finished");
+      VoiceUtils.speakingFlag = false;
+      return;
+    }
 
     const phrase = phrases[lineNum];
+    if (!VoiceUtils.speakingFlag)
+      return;
+
+    console.log("Before speak phrase ", VoiceUtils.speakingFlag);
     const utterance = VoiceUtils.speakPhrase(phrase);
     utterance.onend = () => {
-      setTimeout( () => {
-        onNextPhrase();
-        VoiceUtils.speakPhrasesFrom(phrases, Number(lineNum)+1, onNextPhrase);
-      }, this.interLinePause*1000);
+      const speakingFlagStr = (VoiceUtils.speakingFlag) ? "Continue speaking" : "Stop speaking now"
+      // console.log("Checking speaking flag at end ", speakingFlagStr, lineNum);
+
+      if (VoiceUtils.speakingFlag) {
+        setTimeout( () => {
+          onNextPhrase();
+          this.speakPhrasesFromP(phrases, Number(lineNum)+1, onNextPhrase);
+        }, this.interLinePause*1000);  
+      }
     }
+  }
+
+  static speakPhrasesFrom(phrases, lineNum, onNextPhrase) {
+    VoiceUtils.speakingFlag = true;
+    console.log("Start speaking ", lineNum, ". Speaking set. Flag is ", VoiceUtils.speakingFlag);
+    this.speakPhrasesFromP(phrases, lineNum, onNextPhrase);
   }
 
   static speakPhrases(phrases, onNextPhrase) {
@@ -118,6 +140,8 @@ class VoiceUtils {
   }
 
   static stopSpeaking() {
+    VoiceUtils.speakingFlag = false;
+    console.log("Stop button pressed. From menu this.speakingFlag = ", VoiceUtils.speakingFlag);
     window.speechSynthesis.cancel();
   }
 }

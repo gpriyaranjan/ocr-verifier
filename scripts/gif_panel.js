@@ -1,7 +1,7 @@
 class GifPanel {
 
   static gifOffset = 0; // Offset in pixels
-  static gifScale = 0.975;  // In percentage of the original height
+  static gifScale = 0.97;  // In percentage of the original height
 
   static getImageScaleDown() {
     return C.imageDiv.width / C.imageDiv.naturalWidth;
@@ -22,5 +22,15 @@ class GifPanel {
 
   static scrollToCurrent() {
     this.scrollToLineNum(S.current);
+  }
+
+  static loadImage(imageFilePath) {
+    console.log("Fetching image file ", imageFilePath)
+    C.imageDiv.src = imageFilePath;
+  }
+
+  static onImageLoadComplete() {
+    console.log("Image load complete");
+    GifPanel.scrollToLineNum(0);
   }
 }

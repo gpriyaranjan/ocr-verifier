@@ -19,6 +19,9 @@
 
   <script src="scripts/gif_panel.js"></script>
   <script src="scripts/settings_panel.js"></script>
+  <script src="scripts/chooser_panel.js"></script>
+  <script src="scripts/text_panel.js"></script>
+  <script src="scripts/icons_panel.js"></script>
   <script src="synchronized_panels.js"></script>
 
 </head>
@@ -46,7 +49,7 @@
       </div>
 
       <div id="image-panel">
-        <img id="image" alt="image" tooltip="Handwritten image" onLoad="onImageLoadComplete(this)"/>
+        <img id="image" alt="image" tooltip="Handwritten image" onLoad="GifPanel.onImageLoadComplete()"/>
         <div id="image-hilite" tooltip="Current line"></div>
       </div>
 
@@ -54,13 +57,13 @@
     
     <div id="chooser-panel">
 
-      <button id="choose-data-dir" class="chooser-button" onclick="onSelectDataDirClick()"
+      <button id="choose-data-dir" class="chooser-button" onclick="ChooserPanel.onSelectDataDirClick()"
           data-tooltip="Select data directory">&#x1F4C1;</button>
 
       <div id="data-dir-path" class="chooser-value"
           data-tooltip="Current data directory"></div>
 
-      <button id="choose-image-file" class="chooser-button" onclick="onSelectImageFilePath()"
+      <button id="choose-image-file" class="chooser-button" onclick="ChooserPanel.onSelectImageFileClick()"
           data-tooltip="Select the handwritten image file">&#x1F4C4;</button>
 
       <div id="image-file-path" class="chooser-value"
@@ -77,21 +80,21 @@
     <div id="lower-panel">
 
       <div id="icon-panel">
-        <button id="play-button" class="icon" onclick="onPlay()"
+        <button id="play-button" class="icon" onclick="IconsPanel.onPlay()"
             data-tooltip="Speak the OCR contents starting at highlighted line">&#9658;</button>
 
-        <button id="pause-button" class="icon active" onClick="onPause()"
+        <button id="pause-button" class="icon active" onClick="IconsPanel.onPause()"
             data-tooltip="Pause the speaking">&#9208;</button>
 
         <!-- <button id="edit-button" class="icon">&#9998;</button> -->
-        <button id="save-button" class="icon" onclick="onSave()"
+        <button id="save-button" class="icon" onclick="IconsPanel.onSave()"
             data-tooltip="Save the changes made">&#128190;</button>
         
       </div>
 
       <div id="text-panel">
-        <!-- <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div> -->
-        <div id="text-container"  contenteditable="true"></div>
+        <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div>
+        <!-- <div id="text-container"  contenteditable="true"></div> -->
       </div>
 
     </div>

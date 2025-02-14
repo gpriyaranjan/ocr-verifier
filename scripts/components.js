@@ -14,7 +14,6 @@ class T {
 
   static TextPanelId = 'text-panel';
   static TextContainerId = 'text-container';
-  static TextIframeId = 'text-iframe';
 
   static LineDivClass = 'line-div';
   static HiliteClass = 'hilite';
@@ -62,7 +61,6 @@ class C /* Components */ {
 
   static textPanel;
   static textContainer;
-  static textIframe;
   static lineDivs;
 
   static iconPanel;
@@ -107,7 +105,6 @@ class C /* Components */ {
     
     C.textPanel = document.getElementById(T.TextPanelId);
     C.textContainer = document.getElementById(T.TextContainerId);
-    C.textIframe = document.getElementById(T.TextIframeId);
     C.lineDivs = []
   
     C.iconPanel = document.getElementById(T.IconPanelId);
