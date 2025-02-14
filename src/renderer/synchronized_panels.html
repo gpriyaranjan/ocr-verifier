@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+
+  <link rel="stylesheet" href="synchronized_panels.css">
+
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+
+  <script src="../../dist/renderer/scripts/voice_utils.js"></script>
+
+  <script src="../../dist/renderer/scripts/app_state.js"></script>
+  <script src="../../dist/renderer/scripts/components.js"></script>
+
+  <script src="../../dist/renderer/scripts/gif_panel.js"></script>
+  <script src="../../dist/renderer/scripts/settings_panel.js"></script>
+  <script src="../../dist/renderer/scripts/chooser_panel.js"></script>
+  <script src="../../dist/renderer/scripts/text_panel.js"></script>
+  <script src="../../dist/renderer/scripts/icons_panel.js"></script>
+  <script src="../../dist/renderer/scripts/synchronized_panels.js"></script>
+
+</head>
+
+<body onload="onBodyLoad()">
+  <div id="top-panel">
+
+
+    <div id="upper-panel">
+
+      <div id="settings-panel">
+
+        <div id="speech-speed" class="settings-item">
+          <div id="speech-speed-icon" class="fa fa-tachometer settings-heading-icon"
+                data-tooltip="Speed of the voice (100=normal)"></div>
+          <input id="speech-speed-spin-box" class="settings-value" type="number" 
+            min="10" max="200" step="10" value="50"/>
+        </div>
+
+        <div id="speech-interline" class="settings-item">
+          <div id="speech-interline-icon" class="settings-heading-text"
+                data-tooltip="Voice gap between one line and the next">&#x1F914;</div>
+          <input id="speech-interline-pause" class="settings-value" type="number" value="3"></input>
+        </div>
+      </div>
+
+      <div id="image-panel">
+        <img id="image" alt="image" tooltip="Handwritten image" onLoad="GifPanel.onImageLoadComplete()"/>
+        <div id="image-hilite" tooltip="Current line"></div>
+      </div>
+
+    </div>
+    
+    <div id="chooser-panel">
+
+      <button id="choose-data-dir" class="chooser-button" onclick="ChooserPanel.onSelectDataDirClick()"
+          data-tooltip="Select data directory">&#x1F4C1;</button>
+
+      <div id="data-dir-path" class="chooser-value"
+          data-tooltip="Current data directory"></div>
+
+      <button id="choose-image-file" class="chooser-button" onclick="ChooserPanel.onSelectImageFileClick()"
+          data-tooltip="Select the handwritten image file">&#x1F4C4;</button>
+
+      <div id="image-file-path" class="chooser-value"
+          data-tooltip="Location of current image file"></div>
+
+      <div id="text-file-path" class="chooser-value"
+          data-tooltip="Location of OCR generated text file"></div>
+
+      <div id="edited-text-file-path" class="chooser-value"
+          data-tooltip="Location of file to save changes"></div>
+
+    </div>
+    
+    <div id="lower-panel">
+
+      <div id="icon-panel">
+        <button id="play-button" class="icon" onclick="IconsPanel.onPlay()"
+            data-tooltip="Speak the OCR contents starting at highlighted line">&#9658;</button>
+
+        <button id="pause-button" class="icon active" onClick="IconsPanel.onPause()"
+            data-tooltip="Pause the speaking">&#9208;</button>
+
+        <!-- <button id="edit-button" class="icon">&#9998;</button> -->
+        <button id="save-button" class="icon" onclick="IconsPanel.onSave()"
+            data-tooltip="Save the changes made">&#128190;</button>
+        
+      </div>
+
+      <div id="text-panel">
+        <div id="text-container"  contenteditable="true" onscroll="scrollOtherBar();"></div>
+        <!-- <div id="text-container"  contenteditable="true"></div> -->
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    onDomParse();
+  </script>
+</body>
+</html>

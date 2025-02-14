@@ -1,11 +1,11 @@
 class TextPanel {
 
-  static insertLinesintoTextContainer(in_lines) {
+  static insertLinesintoTextContainer(in_lines : string[]) {
     const parent = C.textContainer;
     for(let i = 0; i < in_lines.length; i++) {
       const lineDiv = document.createElement("div");
       lineDiv.className = T.LineDivClass;
-      lineDiv.dataset.index = i;
+      lineDiv.dataset.index = `${i}`;
       lineDiv.textContent = in_lines[i];
       lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); VoiceUtils.stopSpeaking(); }
       parent.append(lineDiv);
@@ -14,7 +14,7 @@ class TextPanel {
     }
   }
 
-  static populateTextPanel(fileContents) {
+  static populateTextPanel(fileContents : string) {
 
     let textLines = fileContents.split("\n");
         textLines = cleanUpLines(textLines);
@@ -28,16 +28,16 @@ class TextPanel {
     this.hiliteLineNum(S.current);
   }
 
-  static hiliteLine(element) {
+  static hiliteLine(element : HTMLElement) {
     if (S.current != -1)
       C.lineDivs[S.current].classList.remove("hilite");
   
     element.classList.add("hilite");
     console.log(element.dataset.index);
-    S.current = element.dataset.index;
+    S.current = parseInt(element.dataset.index!);
   }
   
-  static hiliteLineNum(lineNum) {
+  static hiliteLineNum(lineNum : number) {
     if (lineNum < 0 || lineNum >= S.lines.length) {
       console.log("Invalid line number");
       return;
@@ -55,7 +55,7 @@ class TextPanel {
     C.lineDivs = []
   }
 
-  static async loadFile(filePath) {
+  static async loadFile(filePath : string) {
     TextPanel.clearTextPanel();
     const fileContents = await ipcRenderer.invoke('read-file-request', filePath);
     console.log("File contents are ", fileContents);

@@ -26,7 +26,11 @@ class ChooserPanel {
     onSelectImageFilePath();
   }
 
-  static populateFilePathFields(response) {
+  static populateFilePathFields(response : {
+    imageFileRelPath: string;
+    ocrOutputFileRelPath: string;
+    editedTextFileRelPath: string;
+  }) {
 
     const {imageFileRelPath, ocrOutputFileRelPath, editedTextFileRelPath} = response;
     console.log("ImageFile is ", imageFileRelPath);

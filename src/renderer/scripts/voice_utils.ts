@@ -1,19 +1,19 @@
 
 class VoiceUtils {
 
-  static allVoices = [];
-  static preferedVoice = null;
+  static allVoices : SpeechSynthesisVoice[] = [];
+  static preferedVoice : SpeechSynthesisVoice|null = null;
 
-  static interLinePause = 3;
-  static utteranceRate = 50;
+  static interLinePause : number = 3;
+  static utteranceRate : number = 50;
 
   static speakingFlag = false;
 
-  static setUtteranceRate(utteranceRate) {
+  static setUtteranceRate(utteranceRate : number) {
     this.utteranceRate = utteranceRate;
   }
 
-  static setInterLinePause(interLinePause) {
+  static setInterLinePause(interLinePause : number) {
     this.interLinePause = interLinePause;
   }
 
@@ -36,8 +36,8 @@ class VoiceUtils {
     window.speechSynthesis.onvoiceschanged = fetchVoices;
   }
 
-  static expandPuctuations(text) {
-    const punctuationMap = {
+  static expandPuctuations(text : string) {
+    const punctuationMap : { [key: string]: string } = {
       ".": " period ",
       ",": " comma ",
       "!": " exclamation point ",
@@ -81,7 +81,7 @@ class VoiceUtils {
     return newText;
   }
   
-  static speakAsIs(phrase) {
+  static speakAsIs(phrase : string) {
     console.log("New utterance generated ", phrase);
 
     const utterance = new SpeechSynthesisUtterance(phrase);
@@ -95,13 +95,13 @@ class VoiceUtils {
     return utterance;
   }
 
-  static speakPhrase(phrase) {
+  static speakPhrase(phrase : string) {
     const expandedPhrase = VoiceUtils.expandPuctuations(phrase);
     const utterance = VoiceUtils.speakAsIs(expandedPhrase);
     return utterance;
   }
 
-  static speakPhrasesFromP(phrases, lineNum, onNextPhrase) {
+  static speakPhrasesFromP(phrases : string[], lineNum : number, onNextPhrase : ()=>void ) {
     // console.log("Speak phrases from private ", lineNum, "speak flag = ", VoiceUtils.speakingFlag);
 
     if (lineNum >= phrases.length) {
@@ -129,13 +129,13 @@ class VoiceUtils {
     }
   }
 
-  static speakPhrasesFrom(phrases, lineNum, onNextPhrase) {
+  static speakPhrasesFrom(phrases : string[], lineNum : number, onNextPhrase : ()=>void ) {
     VoiceUtils.speakingFlag = true;
     console.log("Start speaking ", lineNum, ". Speaking set. Flag is ", VoiceUtils.speakingFlag);
     this.speakPhrasesFromP(phrases, lineNum, onNextPhrase);
   }
 
-  static speakPhrases(phrases, onNextPhrase) {
+  static speakPhrases(phrases : string[], onNextPhrase : ()=>void ) {
     VoiceUtils.speakPhrasesFrom(phrases, 0, onNextPhrase);
   }
 

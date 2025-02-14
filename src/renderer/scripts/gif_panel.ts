@@ -7,12 +7,12 @@ class GifPanel {
     return C.imageDiv.width / C.imageDiv.naturalWidth;
   }
 
-  static scrollToLineNum(lineNum) {
+  static scrollToLineNum(lineNum : number) {
     this.scrollToOffset(50 * lineNum);
     console.log("Image scrolling : Line number ", lineNum, " position ", C.imagePanel.scrollTop);
   }
 
-  static scrollToOffset(offset) {
+  static scrollToOffset(offset : number) {
     const imageScaleDown = this.getImageScaleDown();
     const actualOffset = 100 * imageScaleDown +  this.gifOffset;
     const actualHeight = imageScaleDown * this.gifScale * offset;
@@ -24,7 +24,7 @@ class GifPanel {
     this.scrollToLineNum(S.current);
   }
 
-  static loadImage(imageFilePath) {
+  static loadImage(imageFilePath : string) {
     console.log("Fetching image file ", imageFilePath)
     C.imageDiv.src = imageFilePath;
   }

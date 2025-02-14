@@ -6,9 +6,9 @@ class SettingsPanel {
 
     const confirmed = confirm("Setting speech speed to " + speechSpeed);
     if (confirmed) {
-      VoiceUtils.setUtteranceRate(speechSpeed);
+      VoiceUtils.setUtteranceRate(parseInt(speechSpeed));
     } else {
-      C.speechSpeedSpinBox.value = VoiceUtils.utteranceRate;
+      C.speechSpeedSpinBox.value = `${VoiceUtils.utteranceRate}`;
     }
   }
 
@@ -17,13 +17,13 @@ class SettingsPanel {
     console.log("Setting interLinePause to ", interLinePause);
     const confirmed = confirm("Setting interLinePause to " + interLinePause + " seconds");
     if (confirmed) {
-      VoiceUtils.setInterLinePause(interLinePause);
+      VoiceUtils.setInterLinePause(parseInt(interLinePause));
     } else {
-      C.speechInterlinePause.value = VoiceUtils.interLinePause;
+      C.speechInterlinePause.value = `${VoiceUtils.interLinePause}`;
     }
   }
 
-  static addEnterHandler(element) {
+  static addEnterHandler(element : HTMLInputElement) {
     element.addEventListener('keydown', function(event) {
       if (event.key == 'Enter') {
         event.stopPropagation();
@@ -32,7 +32,7 @@ class SettingsPanel {
     })
   }
 
-  static addBlurHandler(element, handler) {
+  static addBlurHandler(element : HTMLInputElement, handler : () => void ) {
     element.addEventListener('blur', function(event) {
       handler();
     })
