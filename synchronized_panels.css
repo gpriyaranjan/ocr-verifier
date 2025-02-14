@@ -82,8 +82,8 @@ body {
 
 #image-hilite {
 
-  top: 0px;
-  width: 100%;
+  top: 0;
+  width: 90vw;
   height: 50px;
   pointer-events: none;
   background-color: aquamarine;
