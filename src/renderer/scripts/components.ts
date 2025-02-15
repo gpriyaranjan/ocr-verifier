@@ -15,7 +15,9 @@ class T {
   static TextPanelId = 'text-panel';
   static TextContainerId = 'text-container';
 
-  static LineDivClass = 'line-div';
+  static LineContainerClass = 'line-container';
+  static LineDivClass = 'line-div'
+
   static HiliteClass = 'hilite';
   static ActiveClass = 'active';
 

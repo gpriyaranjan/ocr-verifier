@@ -124,7 +124,7 @@ export async function selectImageFilePath(dataDir : string) {
 
   const imageName = FileUtils.getImageName(imageFilePath);
 
-  const ocrOutputFileName = `${imageName}.txt`
+  const ocrOutputFileName = `${imageName}_ocr.txt`
   let   ocrOutputFileRelPath = path.join(FileUtils.OcrOutputDir, ocrOutputFileName);
   const ocrOutputDir = path.join(dataDir, FileUtils.OcrOutputDir);
   const ocrOutputFildFound = await FileUtils.isFileInDir(ocrOutputDir, ocrOutputFileName)

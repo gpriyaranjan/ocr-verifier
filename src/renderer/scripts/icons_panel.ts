@@ -1,6 +1,6 @@
 class IconsPanel {
 
-  static onPlay() {
+  static async onPlay() {
 
     function hiliteNextLine() {
       console.log("Hilite next line called");
@@ -28,7 +28,7 @@ class IconsPanel {
     VoiceUtils.speakPhrasesFrom(S.lines, S.current, hiliteNextLine);
   }
 
-  static onPause() {
+  static async onPause() {
 
     C.playButton.classList.remove(T.ActiveClass);
     C.pauseButton.classList.add(T.ActiveClass);
@@ -55,4 +55,7 @@ class IconsPanel {
     C.ocrOutputFilePath.textContent = S.ocrOutputFileRelPath;
   }
 
+  static async onSearch() {
+    console.log("Searching for ")
+  } 
 }

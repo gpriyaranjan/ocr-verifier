@@ -20,20 +20,23 @@ class TextPanel {
     return out_lines;
   }
 
-  // static lineDivHtmlTemplate = (i: number, textContent: string) => 
-  //     `<div class="line-div" index="${i}">${textContent}</div>`;
+  static lineDivHtmlTemplate = (i: number, textContent: string) => 
+      `<div class="line-div" data-index="${i}">${textContent}</div>
+       <div class="line-state">${i}</div>`;
 
   static insertLinesintoTextContainer(in_lines : string[]) {
     const parent = C.textContainer;
     for(let i = 0; i < in_lines.length; i++) {
+
       console.log("Creating text content ", i, in_lines[i]);
-      const lineDiv = document.createElement("div");
-      // lineDiv.outerHTML = this.lineDivHtmlTemplate(i, in_lines[i]);
-      lineDiv.className = T.LineDivClass;
-      lineDiv.dataset.index = `${i}`;
-      lineDiv.textContent = in_lines[i];
+
+      const lineContainer = document.createElement("div");
+      lineContainer.innerHTML = this.lineDivHtmlTemplate(i, in_lines[i]);
+      lineContainer.className = T.LineContainerClass;
+
+      const lineDiv : HTMLElement = lineContainer.getElementsByClassName(T.LineDivClass)[0] as HTMLElement ;
       lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); VoiceUtils.stopSpeaking(); }
-      parent.append(lineDiv);
+      parent.append(lineContainer);
   
       C.lineDivs.push(lineDiv);   
     }
