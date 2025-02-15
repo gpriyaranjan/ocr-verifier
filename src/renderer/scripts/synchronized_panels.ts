@@ -18,26 +18,6 @@ function onDomParse() {
   activateToolTips();
 }
 
-function cleanUpLines(in_lines: string[]) {
-
-  let out_lines = []
-  for(let i = 0; i < in_lines.length; i++) {
-    const in_line = in_lines[i];
-
-    if (/^\s*$/.test(in_line))
-      continue;
-
-    if (in_line.startsWith("===")) 
-      continue;
-
-    if (in_line.startsWith("Page"))
-      continue;
-
-    out_lines.push(in_line)
-  }
-  return out_lines;
-}
-
 function scrollOtherBar() {
   /*
   const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;

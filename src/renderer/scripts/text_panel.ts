@@ -1,9 +1,34 @@
 class TextPanel {
 
+  static cleanUpLines(in_lines: string[]) {
+
+    let out_lines = []
+    for(let i = 0; i < in_lines.length; i++) {
+      const in_line = in_lines[i];
+  
+      if (/^\s*$/.test(in_line))
+        continue;
+  
+      if (in_line.startsWith("===")) 
+        continue;
+  
+      if (in_line.startsWith("Page"))
+        continue;
+  
+      out_lines.push(in_line)
+    }
+    return out_lines;
+  }
+
+  // static lineDivHtmlTemplate = (i: number, textContent: string) => 
+  //     `<div class="line-div" index="${i}">${textContent}</div>`;
+
   static insertLinesintoTextContainer(in_lines : string[]) {
     const parent = C.textContainer;
     for(let i = 0; i < in_lines.length; i++) {
+      console.log("Creating text content ", i, in_lines[i]);
       const lineDiv = document.createElement("div");
+      // lineDiv.outerHTML = this.lineDivHtmlTemplate(i, in_lines[i]);
       lineDiv.className = T.LineDivClass;
       lineDiv.dataset.index = `${i}`;
       lineDiv.textContent = in_lines[i];
@@ -17,7 +42,7 @@ class TextPanel {
   static populateTextPanel(fileContents : string) {
 
     let textLines = fileContents.split("\n");
-        textLines = cleanUpLines(textLines);
+        textLines = TextPanel.cleanUpLines(textLines);
     // console.log(textLines);
     // console.log("Lines after initial cleanup");
   
