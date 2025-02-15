@@ -9,7 +9,7 @@ function activateToolTips() {
 
 async function onBodyLoad() {
   VoiceUtils.listVoices();
-  // ChooserPanel.setEventHandlers();
+  TextPanel.setEventHandlers();
   SettingsPanel.setEventHandlers();
 }
 

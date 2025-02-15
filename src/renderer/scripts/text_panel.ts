@@ -1,5 +1,18 @@
 class TextPanel {
 
+  static setEventHandlers() {
+    C.textContainer.addEventListener('input', TextPanel.syncText)
+  }
+
+  static syncText(event : Event) {
+    if (event.target instanceof HTMLInputElement) {
+      const index : number = parseInt(event.target.dataset.index!);
+      const textContent : string = event.target.value;
+      // console.log("Index ", index, " Content ", textContent);
+      S.lines[index] = textContent;
+    }
+  }
+
   static cleanUpLines(in_lines: string[]) {
 
     let out_lines = []
@@ -21,7 +34,7 @@ class TextPanel {
   }
 
   static lineDivHtmlTemplate = (i: number, textContent: string) => 
-      `<div class="line-div" data-index="${i}">${textContent}</div>
+      `<input type="text" class="line-div" contenteditable="true" data-index="${i}" value="${textContent}"></input>
        <div class="line-state">${i}</div>`;
 
   static insertLinesintoTextContainer(in_lines : string[]) {

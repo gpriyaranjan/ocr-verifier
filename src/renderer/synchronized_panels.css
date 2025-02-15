@@ -132,9 +132,13 @@ body {
 
 .line-div {
   width: 90vw;
-  font-size: min(28px, 2.1vw);
+  font-size: min(28px, 1.8vw);
+  font-weight: 100;
   line-height: 50px;
 
+  box-sizing: border-box;
+  border: 0;
+  
   white-space: nowrap;
   overflow-x: hidden;
 }
