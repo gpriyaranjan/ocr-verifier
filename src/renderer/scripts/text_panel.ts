@@ -35,7 +35,7 @@ class TextPanel {
 
   static lineDivHtmlTemplate = (i: number, textContent: string) => 
       `<input type="text" class="line-div" contenteditable="true" data-index="${i}" value="${textContent}"></input>
-       <div class="line-state">${i}</div>`;
+       <div class="line-state">${i+1}</div>`;
 
   static insertLinesintoTextContainer(in_lines : string[]) {
     const parent = C.textContainer;
