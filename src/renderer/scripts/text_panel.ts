@@ -47,7 +47,7 @@ class TextPanel {
       lineContainer.innerHTML = this.lineDivHtmlTemplate(i, in_lines[i]);
       lineContainer.className = T.LineContainerClass;
 
-      const lineDiv : HTMLElement = lineContainer.getElementsByClassName(T.LineDivClass)[0] as HTMLElement ;
+      const lineDiv : HTMLInputElement = lineContainer.getElementsByClassName(T.LineDivClass)[0] as HTMLInputElement ;
       lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); VoiceUtils.stopSpeaking(); }
       parent.append(lineContainer);
   
@@ -81,6 +81,7 @@ class TextPanel {
   static hiliteLineNum(lineNum : number) {
     if (lineNum < 0 || lineNum >= S.lines.length) {
       console.log("Invalid line number");
+      console.trace()
       return;
     }
     const element = C.lineDivs[lineNum];

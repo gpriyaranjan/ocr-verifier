@@ -41,8 +41,9 @@ class IconsPanel {
 
     const cur_lines = []
     for(let i = 0; i < C.lineDivs.length; i++) {
-      const lineDiv = C.lineDivs[i];
-      cur_lines.push(lineDiv.textContent);
+      // const lineDiv : HTMLInputElement = C.lineDivs[i];
+      // console.log(lineDiv);
+      cur_lines.push(S.lines[i]);
     }
     const contents = cur_lines.join("\n")
 

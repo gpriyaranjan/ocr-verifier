@@ -55,7 +55,7 @@ class C /* Components */ {
 
   static textPanel : HTMLElement;
   static textContainer : HTMLElement;
-  static lineDivs : HTMLElement[];
+  static lineDivs : HTMLInputElement[];
 
   static iconPanel : HTMLElement;
   static playButton : HTMLElement;
