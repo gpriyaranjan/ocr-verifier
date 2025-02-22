@@ -1,11 +1,12 @@
-import {onSelectImageFilePath} from './synchronized_panels.js';
-
 import {C} from './components.js';
 import {S} from './app_state.js';
 
-import {ipcRenderer} from 'electron';
+import {getIpcRenderer} from "./ipc_renderer.js";
+const {ipcRenderer} = await getIpcRenderer();
 
-class ChooserPanel {
+import {onSelectImageFilePath} from './synchronized_panels.js';
+
+export class ChooserPanel {
 
   static async onSelectDataDirClick() {
     console.log('Making select-data-dir-request');
@@ -59,5 +60,13 @@ class ChooserPanel {
     C.editedTextFileRelPath.textContent = editedTextFileRelPath;
     S.editedTextFileRelPath = editedTextFileRelPath;
 
+  }
+
+  static setEventHandlers() {
+    C.chooseDataDir.addEventListener('click', 
+        (event) => { this.onSelectDataDirClick()});
+
+    C.chooseImageFile.addEventListener('click',
+        (event) => { this.onSelectImageFileClick()});
   }
 }

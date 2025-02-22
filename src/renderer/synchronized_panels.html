@@ -17,6 +17,7 @@
   <script type="module" src="../../dist/renderer/scripts/app_state.js"></script>
   <script type="module" src="../../dist/renderer/scripts/components.js"></script>
 
+  <script type="module" src="../../dist/renderer/scripts/ipc_renderer.js"></script>
   <script type="module" src="../../dist/renderer/scripts/gif_panel.js"></script>
   <script type="module" src="../../dist/renderer/scripts/magnifying_glass.js"></script>
   <script type="module" src="../../dist/renderer/scripts/settings_panel.js"></script>
@@ -67,13 +68,13 @@
     
     <div id="chooser-panel">
 
-      <button id="choose-data-dir" class="chooser-button" onclick="ChooserPanel.onSelectDataDirClick()"
+      <button id="choose-data-dir" class="chooser-button"
           data-tooltip="Select data directory">&#x1F4C1;</button>
 
       <div id="data-dir-path" class="chooser-value"
           data-tooltip="Current data directory"></div>
 
-      <button id="choose-image-file" class="chooser-button" onclick="ChooserPanel.onSelectImageFileClick()"
+      <button id="choose-image-file" class="chooser-button"
           data-tooltip="Select the handwritten image file">&#x1F4C4;</button>
 
       <div id="image-file-path" class="chooser-value"

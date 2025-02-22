@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build": "tsc",
+
     "dev": "npm run build && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,8 +15,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
     "@types/electron": "^1.6.12",
+    "babel-loader": "^9.2.1",
     "electron": "^34.2.0",
-    "typescript": "^5.7.3"
+    "electron-builder": "^25.1.8",
+    "html-webpack-plugin": "^5.6.3",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
   }
 }

@@ -1,7 +1,8 @@
-import {ipcRenderer} from "electron";
-
 import { C, T } from "./components.js";
 import { S } from "./app_state.js";
+
+import {getIpcRenderer} from "./ipc_renderer.js";
+const {ipcRenderer} = await getIpcRenderer();
 
 import {TextPanel} from "./text_panel.js";
 import {VoiceUtils} from './voice_utils.js';
@@ -49,13 +50,11 @@ export class IconsPanel {
 
     const cur_lines = []
     for(let i = 0; i < C.lineDivs.length; i++) {
-      // const lineDiv : HTMLInputElement = C.lineDivs[i];
-      // console.log(lineDiv);
       cur_lines.push(S.lines[i]);
     }
     const contents = cur_lines.join("\n")
 
-    console.log('Making save-file-request');  
+    console.log('Making save-file-request');
     const saved = await ipcRenderer.invoke('save-file-request', 
       S.dataDir, S.editedTextFileRelPath, contents);
 

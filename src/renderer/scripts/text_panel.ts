@@ -4,7 +4,8 @@ import { S } from './app_state.js';
 import { VoiceUtils } from './voice_utils.js';
 import { scrollOtherBar } from "./synchronized_panels.js";
 
-import {ipcRenderer} from 'electron';
+import {getIpcRenderer} from "./ipc_renderer.js";
+const {ipcRenderer} = await getIpcRenderer();
 
 export class TextPanel {
 

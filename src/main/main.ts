@@ -1,9 +1,13 @@
-import { app, BrowserWindow, ipcMain, dialog, screen } from 'electron'
-import * as path from 'path';
+// import { app, BrowserWindow, ipcMain, dialog, screen } from 'electron'
+
 
 import {selectDataDir, selectImageFilePath, saveFile, readFile} from './file_utils.js';
 
+import * as path from 'path';
 import { fileURLToPath } from 'url';
+
+import {getIpcMain} from "./ipc_main.js";
+const { app, BrowserWindow, ipcMain, dialog, screen } = await getIpcMain();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

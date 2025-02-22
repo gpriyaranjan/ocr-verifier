@@ -46,9 +46,9 @@ export class C /* Components */ {
   static topPanel : HTMLElement;
 
   static chooserPanel : HTMLElement;
-  static chooseDataDir : HTMLElement;
+  static chooseDataDir : HTMLButtonElement;
   static dataDirPath : HTMLElement;
-  static chooseImageFile : HTMLElement;
+  static chooseImageFile : HTMLButtonElement;
   static imageFilePath : HTMLElement;
   static ocrOutputFilePath : HTMLElement;
   static editedTextFileRelPath : HTMLElement;
@@ -84,10 +84,10 @@ export class C /* Components */ {
   
     C.chooserPanel = document.getElementById(T.chooserPanelId)!;
 
-    C.chooseDataDir = document.getElementById(T.chooseDataDirId)!;
+    C.chooseDataDir = document.getElementById(T.chooseDataDirId)! as HTMLButtonElement;
     C.dataDirPath = document.getElementById(T.dataDirPathId)!;
 
-    C.chooseImageFile = document.getElementById(T.chooseImageFileId)!;
+    C.chooseImageFile = document.getElementById(T.chooseImageFileId)! as HTMLButtonElement;
     C.imageFilePath = document.getElementById(T.imageFilePathId)!;
     C.ocrOutputFilePath = document.getElementById(T.ocrOutputFilePathId)!;
     C.editedTextFileRelPath = document.getElementById(T.editedTextFileRelPathId)!;

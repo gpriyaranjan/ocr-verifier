@@ -6,6 +6,7 @@ import {SettingsPanel} from "./settings_panel.js";
 import {GifPanel} from './gif_panel.js';
 import {TextPanel} from './text_panel.js';
 import { MagnifyingGlass } from './magnifying_glass.js';
+import { ChooserPanel } from './chooser_panel.js';
 
 declare var tippy: any;
 
@@ -17,11 +18,19 @@ function activateToolTips() {
 }
 
 async function onBodyLoad() {
+  C.assignComponents();
+
+  MagnifyingGlass.setContext();
   MagnifyingGlass.setEventHandlers();
+
+  ChooserPanel.setEventHandlers();
+  
   VoiceUtils.listVoices();
+
   TextPanel.setEventHandlers();
   SettingsPanel.setEventHandlers();
 }
+
 window.addEventListener('load', onBodyLoad);
 
 function onDomParse() {
