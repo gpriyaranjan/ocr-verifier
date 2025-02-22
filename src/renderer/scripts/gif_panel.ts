@@ -34,6 +34,10 @@ export class GifPanel {
 
   static onImageLoadComplete() {
     console.log("Image load complete");
-    // GifPanel.scrollToLineNum(0);
+    GifPanel.scrollToLineNum(0);
+  }
+
+  static setEventHandlers() {
+    C.imageDiv.addEventListener('load', this.onImageLoadComplete);
   }
 }

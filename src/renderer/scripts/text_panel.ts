@@ -10,7 +10,8 @@ const {ipcRenderer} = await getIpcRenderer();
 export class TextPanel {
 
   static setEventHandlers() {
-    C.textContainer.addEventListener('input', TextPanel.syncText)
+    C.textContainer.addEventListener('input', TextPanel.syncText);
+    C.textContainer.addEventListener('scroll', scrollOtherBar);
   }
 
   static syncText(event : Event) {

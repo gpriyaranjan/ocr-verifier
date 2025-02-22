@@ -20,6 +20,7 @@ function activateToolTips() {
 async function onBodyLoad() {
   C.assignComponents();
 
+  GifPanel.setEventHandlers();
   MagnifyingGlass.setContext();
   MagnifyingGlass.setEventHandlers();
 
