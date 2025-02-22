@@ -1,4 +1,4 @@
-class T {
+export class T {
   static TopPanelId = 'top-panel';
 
   static chooserPanelId = 'chooser-panel';
@@ -11,6 +11,9 @@ class T {
 
   static ImagePanelId = 'image-panel';
   static ImageDivId = 'image';
+  static ImageHiliteId = 'image-hilite';
+  static MagnifierId = 'magnifier';
+  static MagnifiedImageId = 'magnified-image';
 
   static TextPanelId = 'text-panel';
   static TextContainerId = 'text-container';
@@ -39,7 +42,7 @@ class T {
 
 };
 
-class C /* Components */ {
+export class C /* Components */ {
   static topPanel : HTMLElement;
 
   static chooserPanel : HTMLElement;
@@ -50,8 +53,11 @@ class C /* Components */ {
   static ocrOutputFilePath : HTMLElement;
   static editedTextFileRelPath : HTMLElement;
 
-  static imagePanel : HTMLElement;
+  static imagePanel : HTMLDivElement;
   static imageDiv : HTMLImageElement;
+  static imageHilite : HTMLDivElement;
+  static magnifier : HTMLDivElement;
+  static magnifiedImage : HTMLDivElement;
 
   static textPanel : HTMLElement;
   static textContainer : HTMLElement;
@@ -86,9 +92,12 @@ class C /* Components */ {
     C.ocrOutputFilePath = document.getElementById(T.ocrOutputFilePathId)!;
     C.editedTextFileRelPath = document.getElementById(T.editedTextFileRelPathId)!;
 
-    C.imagePanel = document.getElementById(T.ImagePanelId)!;
+    C.imagePanel = document.getElementById(T.ImagePanelId)! as HTMLDivElement;
+    C.imageHilite = document.getElementById(T.ImageHiliteId)! as HTMLDivElement;
     C.imageDiv = document.getElementById(T.ImageDivId)! as HTMLImageElement;
-    
+    C.magnifier = document.getElementById(T.MagnifierId)! as HTMLDivElement;
+    C.magnifiedImage = document.getElementById(T.MagnifiedImageId)! as HTMLImageElement;
+
     C.textPanel = document.getElementById(T.TextPanelId)!;
     C.textContainer = document.getElementById(T.TextContainerId)!;
     C.lineDivs = []

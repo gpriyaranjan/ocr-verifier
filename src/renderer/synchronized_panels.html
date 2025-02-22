@@ -12,23 +12,23 @@
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://unpkg.com/tippy.js@6"></script>
 
-  <script src="../../dist/renderer/scripts/voice_utils.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/voice_utils.js"></script>
 
-  <script src="../../dist/renderer/scripts/app_state.js"></script>
-  <script src="../../dist/renderer/scripts/components.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/app_state.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/components.js"></script>
 
-  <script src="../../dist/renderer/scripts/gif_panel.js"></script>
-  <script src="../../dist/renderer/scripts/settings_panel.js"></script>
-  <script src="../../dist/renderer/scripts/chooser_panel.js"></script>
-  <script src="../../dist/renderer/scripts/text_panel.js"></script>
-  <script src="../../dist/renderer/scripts/icons_panel.js"></script>
-  <script src="../../dist/renderer/scripts/synchronized_panels.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/gif_panel.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/magnifying_glass.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/settings_panel.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/chooser_panel.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/text_panel.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/icons_panel.js"></script>
+  <script type="module" src="../../dist/renderer/scripts/synchronized_panels.js"></script>
 
 </head>
 
-<body onload="onBodyLoad()">
+<body>
   <div id="top-panel">
-
 
     <div id="upper-panel">
 
@@ -46,11 +46,21 @@
                 data-tooltip="Voice gap between one line and the next">&#x1F914;</div>
           <input id="speech-interline-pause" class="settings-value" type="number" value="3"></input>
         </div>
+
+        <div  id="zoom-icon" class="icon" onClick="SettingsPanel.onMagnifierEnabled()"
+              data-tooltip="Add zoom circle">&#x2BEA;</div>
+
+        <div  id="unzoom-icon" class="icon" onClick="SettingsPanel.onMagnifierDisabled()"
+              data-tooltip="Remove zoom circle">&#x2BEB;</div>
+
       </div>
 
       <div id="image-panel">
         <img id="image" alt="image" tooltip="Handwritten image" onLoad="GifPanel.onImageLoadComplete()"/>
         <div id="image-hilite" tooltip="Current line"></div>
+        <div id="magnifier">
+          <div id="magnified-image"></div>
+        </div>
       </div>
 
     </div>
@@ -103,8 +113,5 @@
     </div>
   </div>
 
-  <script>
-    onDomParse();
-  </script>
 </body>
 </html>

@@ -1,4 +1,7 @@
-class GifPanel {
+import { C } from "./components.js";
+import { S } from "./app_state.js";
+
+export class GifPanel {
 
   static gifOffset = 0; // Offset in pixels
   static gifScale = 0.97;  // In percentage of the original height
@@ -31,6 +34,6 @@ class GifPanel {
 
   static onImageLoadComplete() {
     console.log("Image load complete");
-    GifPanel.scrollToLineNum(0);
+    // GifPanel.scrollToLineNum(0);
   }
 }

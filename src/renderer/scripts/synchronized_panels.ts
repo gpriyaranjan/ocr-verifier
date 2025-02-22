@@ -1,3 +1,12 @@
+import {C} from './components.js';
+import {S} from './app_state.js';
+
+import {VoiceUtils} from './voice_utils.js';
+import {SettingsPanel} from "./settings_panel.js";
+import {GifPanel} from './gif_panel.js';
+import {TextPanel} from './text_panel.js';
+import { MagnifyingGlass } from './magnifying_glass.js';
+
 declare var tippy: any;
 
 function activateToolTips() {
@@ -8,17 +17,24 @@ function activateToolTips() {
 }
 
 async function onBodyLoad() {
+  MagnifyingGlass.setEventHandlers();
   VoiceUtils.listVoices();
   TextPanel.setEventHandlers();
   SettingsPanel.setEventHandlers();
 }
+window.addEventListener('load', onBodyLoad);
 
 function onDomParse() {
   C.assignComponents();
   activateToolTips();
+
+  // Call onDomParse when the DOM is fully loaded inside the module
+  window.addEventListener('DOMContentLoaded', () => {
+    onDomParse();
+  });
 }
 
-function scrollOtherBar() {
+export function scrollOtherBar() {
   /*
   const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
   C.imagePanel.scrollTop = C.textContainer.scrollTop * imageScaleDown * 0.98 + 75;
@@ -27,9 +43,7 @@ function scrollOtherBar() {
   console.log('Scroll event triggered ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
 }
 
-const { ipcRenderer } = require('electron');
-
-async function onSelectImageFilePath() {
+export async function onSelectImageFilePath() {
 
   const imageFilePath = `${S.dataDir}/${S.imageFileRelPath}`;
   GifPanel.loadImage(imageFilePath);

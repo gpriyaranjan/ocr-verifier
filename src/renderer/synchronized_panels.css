@@ -68,7 +68,7 @@ body {
 }
 
 #image-panel {
-  left: 5vw;
+  position: relative;
   width: 90vw;
   overflow-y: auto;
 }
@@ -203,7 +203,7 @@ body {
   padding: 0;
   width: 5vw;
   top: 50%;
-  height: 50%;
+  height: 100%;
   margin-top: 0;
   margin-bottom: auto;
 }
@@ -233,4 +233,21 @@ body {
   margin-top: 0.25vw;
   width: 3.5vw;
   height: 1.5vw;
+}
+
+#magnifier {
+  position: absolute;
+  pointer-events: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  cursor: crosshair;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+#magnified-image {
+  position: absolute;
+  /* No width/height here, it's scaled */
 }

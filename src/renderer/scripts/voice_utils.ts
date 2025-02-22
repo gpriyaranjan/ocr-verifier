@@ -1,5 +1,5 @@
 
-class VoiceUtils {
+export class VoiceUtils {
 
   static allVoices : SpeechSynthesisVoice[] = [];
   static preferedVoice : SpeechSynthesisVoice|null = null;

@@ -1,4 +1,12 @@
-class TextPanel {
+import { C, T } from './components.js';
+import { S } from './app_state.js';
+
+import { VoiceUtils } from './voice_utils.js';
+import { scrollOtherBar } from "./synchronized_panels.js";
+
+import {ipcRenderer} from 'electron';
+
+export class TextPanel {
 
   static setEventHandlers() {
     C.textContainer.addEventListener('input', TextPanel.syncText)

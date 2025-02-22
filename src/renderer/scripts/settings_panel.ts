@@ -1,4 +1,10 @@
-class SettingsPanel {
+
+import {C} from "./components.js";
+import {VoiceUtils} from './voice_utils.js';
+
+import {MagnifyingGlass} from "./magnifying_glass.js";
+
+export class SettingsPanel {
 
   static onSpeechSpeedSet() {
     const speechSpeed = C.speechSpeedSpinBox.value;
@@ -36,6 +42,15 @@ class SettingsPanel {
     element.addEventListener('blur', function(event) {
       handler();
     })
+  }
+
+  static onMagnifierEnabled() {
+    MagnifyingGlass.setRadius(C.imageHilite.clientHeight)
+    MagnifyingGlass.enable();
+  }
+
+  static onMagnifierDisabled() {
+    MagnifyingGlass.disable();
   }
 
   static setEventHandlers() {

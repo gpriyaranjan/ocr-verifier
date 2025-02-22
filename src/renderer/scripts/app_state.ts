@@ -11,4 +11,4 @@ class AppState {
   
 };
 
-const S = new AppState();
+export const S = new AppState();

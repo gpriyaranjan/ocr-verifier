@@ -1,3 +1,10 @@
+import {onSelectImageFilePath} from './synchronized_panels.js';
+
+import {C} from './components.js';
+import {S} from './app_state.js';
+
+import {ipcRenderer} from 'electron';
+
 class ChooserPanel {
 
   static async onSelectDataDirClick() {
@@ -5,6 +12,9 @@ class ChooserPanel {
     const dataDir = await ipcRenderer.invoke('select-data-dir-request');
     console.log("Selected ", dataDir);
 
+    if (!dataDir || !dataDir.length)
+      return;
+    
     S.dataDir = dataDir;
     C.dataDirPath.textContent = dataDir;
     this.clearFilePaths();
@@ -34,6 +44,9 @@ class ChooserPanel {
 
     const {imageFileRelPath, ocrOutputFileRelPath, editedTextFileRelPath} = response;
     console.log("ImageFile is ", imageFileRelPath);
+
+    if (imageFileRelPath == null)
+      return;
 
     C.imageFilePath.textContent = imageFileRelPath;
     S.imageFileRelPath = imageFileRelPath;

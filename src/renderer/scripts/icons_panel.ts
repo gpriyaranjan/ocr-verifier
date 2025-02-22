@@ -1,4 +1,12 @@
-class IconsPanel {
+import {ipcRenderer} from "electron";
+
+import { C, T } from "./components.js";
+import { S } from "./app_state.js";
+
+import {TextPanel} from "./text_panel.js";
+import {VoiceUtils} from './voice_utils.js';
+
+export class IconsPanel {
 
   static async onPlay() {
 
