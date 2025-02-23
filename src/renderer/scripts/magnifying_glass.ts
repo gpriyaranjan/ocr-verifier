@@ -22,7 +22,7 @@ export class MagnifyingGlass {
     this.image = C.imageDiv;
     this.magnifier = C.magnifier;
     this.magnifiedImage = C.magnifiedImage;
-    this.container = C.imagePanel;
+    this.container = C.imageContainer;
   }
 
   static enable() {
@@ -56,8 +56,6 @@ export class MagnifyingGlass {
     });
 
     this.container.addEventListener("mousemove", (e) => {
-      if (this.debug)
-        console.log("Mouse coordinates are ", e.offsetX, e.offsetY);
       this.showWithCenter(e.offsetX, e.offsetY);
     });
 
