@@ -12,8 +12,10 @@ export class MagnifyingGlass {
   static magRadius = 60;
   static zoom = 2;
 
-  static setRadius(magRadius: number) {
-    this.magRadius = magRadius;
+  static debug = false;
+
+  static setDiameter(magDiameter: number) {
+    this.magRadius = magDiameter / 2;
   }
 
   static setContext() {
@@ -35,7 +37,6 @@ export class MagnifyingGlass {
     if (!this.enabled) return;
     console.log("Showing magnifier block");
     this.magnifier.style.display = "block"; 
-    // this.magnifiedImage.style.backgroundImage = "block";
   }
 
   static hide() {
@@ -44,16 +45,25 @@ export class MagnifyingGlass {
     // this.magnifiedImage.style.backgroundImage = "none";
   }
 
+  static setDebug(str: string) {
+    this.debug = true;
+    console.log("Setting debugger ", str);
+  }
+
   static setEventHandlers() {
-    /*
     this.container.addEventListener("mouseleave", () => {
       this.hide();
     });
-    */
 
     this.container.addEventListener("mousemove", (e) => {
-      this.showWithCorner(e.offsetX, e.offsetY);
+      if (this.debug)
+        console.log("Mouse coordinates are ", e.offsetX, e.offsetY);
+      this.showWithCenter(e.offsetX, e.offsetY);
     });
+
+    this.magnifier.addEventListener('click', (e) => this.setDebug("magnifier"));
+    this.magnifiedImage.addEventListener('click', (e) => this.setDebug("magnifiedImage"));
+    C.imageDiv.addEventListener('click', (e) => this.setDebug("image"));
   }
 
   static print() {
@@ -63,33 +73,47 @@ export class MagnifyingGlass {
   }
 
   static showWithCorner(leftX: number, topY: number) {
-    console.log(`showWithCorner(${leftX}, ${topY})`);
+    if (this.debug)
+      console.log(`showWithCorner(${leftX}, ${topY})`);
     this.showWithCenter(leftX + this.magRadius, topY + this.magRadius);
   }
 
-  static showWithCenter(panelCenterX: number, panelCenterY: number) {
-    console.log(`showWithCenter(${panelCenterX}, ${panelCenterY})`);
+  static showWithCenter(magCenterX: number, magCenterY: number) {
+
+    if (this.debug)
+      console.log(`showWithCenter(${magCenterX}, ${magCenterY})`);
+
     if (!this.enabled) {
       console.log('Magnifying not enabled');
       return;
     }
+
     _showWithCenter(
-      panelCenterX, panelCenterY, 
-      this.image, this.image.scrollTop, 
-      this.magRadius, this.zoom,
+      magCenterX, magCenterY, 
+      this.image, this.container.scrollTop, 
+      this.magRadius, this.zoom, this.debug,
       this.magnifier, this.magnifiedImage );
+
+    this.show();
+  
+    if (this.debug) {
+      this.debug = false;
+      console.log("Reset debugger ");  
+    }
   }
 }
 
 function _showWithCenter(
-  panelCenterX : number, panelCenterY : number, 
+  magCenterX : number, magCenterY : number, 
   image : HTMLImageElement, scrollTop : number, 
-  magRadius : number, zoom : number,
+  magRadius : number, zoom : number, debug: boolean,
   magnifier : HTMLDivElement, magnifiedImage : HTMLDivElement
 ) {
 
-  let imgCenterX = panelCenterX;
-  let imgCenterY = panelCenterY + image.scrollTop;
+  magCenterY = magCenterY - scrollTop;
+
+  let imgCenterX = magCenterX;
+  let imgCenterY = magCenterY + scrollTop;
 
   // Image parameters
   const imageRect = image.getBoundingClientRect();
@@ -99,22 +123,32 @@ function _showWithCenter(
   imgCenterX = Math.max(magRadius, Math.min(imgCenterX, maxCenterX));
   imgCenterY = Math.max(magRadius, Math.min(imgCenterY, maxCenterY));
 
-  console.log("ClientBoundingRect = ", imageRect)
-  console.log("Radius ", magRadius);
-  console.log("x-center = ", imgCenterX, ", y = ", imgCenterY)
+  // console.log("ClientBoundingRect = ", imageRect)
+  // console.log("Radius ", magRadius);
+  // console.log("x-center = ", imgCenterX, ", y = ", imgCenterY)
 
   const imageX = imgCenterX - magRadius;
   const imageY = imgCenterY - magRadius;
-  console.log("imageX = ", imageX, " imageY = ", imageY);
 
-  magnifier.style.left = imageX + "px";
-  magnifier.style.top = imageY + "px";
+  const magnifierX = magCenterX - magRadius;
+  const magnifierY = magCenterY - magRadius;
+
+  if (debug) {
+    console.log("MagnifierX = ", magnifierX, ", MagnifierY = ", magnifierY);
+    console.log("imageX = ", imageX, " imageY = ", imageY);
+  }
+
+  magnifier.style.left = magnifierX + "px";
+  magnifier.style.top = magnifierY + "px";
 
   const bgCenterX = - imgCenterX * zoom;
   const bgCenterY = - imgCenterY * zoom;
 
-  const bgX = bgCenterX + 1.5 * magRadius;
-  const bgY = bgCenterY + 1.5 * magRadius;
+  const bgX = bgCenterX + 1 * magRadius;
+  const bgY = bgCenterY + 1 * magRadius;
+
+  if (debug)
+    console.log("bgX = ", bgX, " bgY = ", bgY);
 
   magnifiedImage.style.backgroundImage = "url('" + image.src + "')";
   magnifiedImage.style.backgroundSize = 
@@ -122,7 +156,4 @@ function _showWithCenter(
     (image.height * zoom) + "px";
 
   magnifiedImage.style.backgroundPosition = bgX + "px " + bgY + "px";
-
-  MagnifyingGlass.enable();
-  MagnifyingGlass.show();
 };

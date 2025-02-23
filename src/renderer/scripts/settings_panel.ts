@@ -46,7 +46,7 @@ export class SettingsPanel {
 
   static onMagnifierEnabled() {
     console.log("Magnifying Glass enabled");
-    MagnifyingGlass.setRadius(C.imageHilite.clientHeight)
+    MagnifyingGlass.setDiameter(C.imageHilite.clientHeight)
     MagnifyingGlass.enable();
     MagnifyingGlass.show();
   }
