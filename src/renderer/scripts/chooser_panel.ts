@@ -19,6 +19,8 @@ export class ChooserPanel {
     S.dataDir = dataDir;
     C.dataDirPath.textContent = dataDir;
     this.clearFilePaths();
+    C.chooseImageFile.focus();
+    C.chooseImageFile.disabled = false;
   }
 
   static clearFilePaths() {

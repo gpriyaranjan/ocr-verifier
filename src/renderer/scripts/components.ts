@@ -11,6 +11,7 @@ export class T {
 
   static ImagePanelId = 'image-panel';
   static ImageDivId = 'image';
+  static ImageContainerId = 'image-container';
   static ImageHiliteId = 'image-hilite';
   static MagnifierId = 'magnifier';
   static MagnifiedImageId = 'magnified-image';
@@ -58,6 +59,7 @@ export class C /* Components */ {
   static editedTextFileRelPath : HTMLElement;
 
   static imagePanel : HTMLDivElement;
+  static imageContainer : HTMLDivElement;
   static imageDiv : HTMLImageElement;
   static imageHilite : HTMLDivElement;
   static magnifier : HTMLDivElement;
@@ -102,6 +104,7 @@ export class C /* Components */ {
 
     C.imagePanel = document.getElementById(T.ImagePanelId)! as HTMLDivElement;
     C.imageHilite = document.getElementById(T.ImageHiliteId)! as HTMLDivElement;
+    C.imageContainer = document.getElementById(T.ImageContainerId)! as HTMLDivElement;
     C.imageDiv = document.getElementById(T.ImageDivId)! as HTMLImageElement;
     C.magnifier = document.getElementById(T.MagnifierId)! as HTMLDivElement;
     C.magnifiedImage = document.getElementById(T.MagnifiedImageId)! as HTMLImageElement;

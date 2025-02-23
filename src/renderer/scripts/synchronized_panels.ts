@@ -49,12 +49,8 @@ function onDomParse() {
 }
 
 export function scrollOtherBar() {
-  /*
-  const imageScaleDown = C.imageDiv.width / C.imageDiv.naturalWidth;
-  C.imagePanel.scrollTop = C.textContainer.scrollTop * imageScaleDown * 0.98 + 75;
-  */
+  console.log('Scroll event triggered ', C.imageContainer.scrollTop, C.textContainer.scrollTop);
   GifPanel.scrollToOffset(C.textContainer.scrollTop);
-  console.log('Scroll event triggered ', C.imagePanel.scrollTop, C.textContainer.scrollTop);
 }
 
 export async function onSelectImageFilePath() {

@@ -16,11 +16,12 @@ export class GifPanel {
   }
 
   static scrollToOffset(offset : number) {
+    console.log("GifPanel::scrollToOffset ", offset);
     const imageScaleDown = this.getImageScaleDown();
     const actualOffset = 100 * imageScaleDown +  this.gifOffset;
     const actualHeight = imageScaleDown * this.gifScale * offset;
     const actualPosition = actualOffset + actualHeight;
-    C.imagePanel.scrollTop = actualPosition;
+    C.imageContainer.scrollTop = actualPosition;
   }
 
   static scrollToCurrent() {

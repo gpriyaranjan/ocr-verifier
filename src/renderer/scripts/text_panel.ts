@@ -47,6 +47,13 @@ export class TextPanel {
       `<input type="text" class="line-div" contenteditable="true" data-index="${i}" value="${textContent}"></input>
        <div class="line-state">${i+1}</div>`;
 
+  static onLineClick(lineDiv: HTMLInputElement) {
+    TextPanel.hiliteLine(lineDiv);
+    TextPanel.scrollToLine(Number(lineDiv.dataset.index));
+    scrollOtherBar();
+    VoiceUtils.stopSpeaking();
+  }
+
   static insertLinesintoTextContainer(in_lines : string[]) {
     const parent = C.textContainer;
     for(let i = 0; i < in_lines.length; i++) {
@@ -58,7 +65,7 @@ export class TextPanel {
       lineContainer.className = T.LineContainerClass;
 
       const lineDiv : HTMLInputElement = lineContainer.getElementsByClassName(T.LineDivClass)[0] as HTMLInputElement ;
-      lineDiv.onclick = () => { TextPanel.hiliteLine(lineDiv); scrollOtherBar(); VoiceUtils.stopSpeaking(); }
+      lineDiv.onclick = () => { TextPanel.onLineClick(lineDiv); }
       parent.append(lineContainer);
   
       C.lineDivs.push(lineDiv);   
@@ -97,6 +104,11 @@ export class TextPanel {
     const element = C.lineDivs[lineNum];
     this.hiliteLine(element);
     element.scrollIntoView();
+  }
+
+  static scrollToLine(lineNum : number) {
+    C.textContainer.scrollTop = 50*lineNum;
+    console.log("Scrolling to position ", C.textContainer.scrollTop);
   }
 
   static clearTextPanel() {
