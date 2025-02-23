@@ -33,6 +33,7 @@ export class MagnifyingGlass {
 
   static show() {
     if (!this.enabled) return;
+    console.log("Showing magnifier block");
     this.magnifier.style.display = "block"; 
     // this.magnifiedImage.style.backgroundImage = "block";
   }

@@ -66,4 +66,11 @@ export class IconsPanel {
   static async onSearch() {
     console.log("Searching for ")
   } 
+
+  static setEventHandlers() {
+    C.playButton.addEventListener('click', this.onPlay);
+    C.pauseButton.addEventListener('click', this.onPause);
+    C.saveButton.addEventListener('click', this.onSave);
+    C.searchButton.addEventListener('click', this.onSearch);
+  }
 }

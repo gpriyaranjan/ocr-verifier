@@ -48,21 +48,21 @@
           <input id="speech-interline-pause" class="settings-value" type="number" value="3"></input>
         </div>
 
-        <div  id="zoom-icon" class="icon" onClick="SettingsPanel.onMagnifierEnabled()"
+        <div  id="zoom-icon" class="icon"
               data-tooltip="Add zoom circle">&#x2BEA;</div>
 
-        <div  id="unzoom-icon" class="icon" onClick="SettingsPanel.onMagnifierDisabled()"
+        <div  id="unzoom-icon" class="icon"
               data-tooltip="Remove zoom circle">&#x2BEB;</div>
 
       </div>
 
       <div id="image-panel">
         <img id="image" alt="image" tooltip="Handwritten image"/>
-        <div id="image-hilite" tooltip="Current line"></div>
         <div id="magnifier">
           <div id="magnified-image"></div>
         </div>
       </div>
+      <div id="image-hilite" tooltip="Current line"></div>
 
     </div>
     
@@ -91,24 +91,23 @@
     <div id="lower-panel">
 
       <div id="icon-panel">
-        <button id="play-button" class="icon" onclick="IconsPanel.onPlay()"
+        <button id="play-button" class="icon"
             data-tooltip="Speak the OCR contents starting at highlighted line">&#9658;</button>
 
-        <button id="pause-button" class="icon active" onClick="IconsPanel.onPause()"
+        <button id="pause-button" class="icon active"
             data-tooltip="Pause the speaking">&#9208;</button>
 
-        <button id="search-button" class="icon" onClick="IconsPanel.onSearch()"
+        <button id="search-button" class="icon"
             data-tooltip="Search within a line">&#x1F50D;</button>
 
         <!-- <button id="edit-button" class="icon">&#9998;</button> -->
-        <button id="save-button" class="icon" onclick="IconsPanel.onSave()"
+        <button id="save-button" class="icon"
             data-tooltip="Save the changes made">&#128190;</button>
         
       </div>
 
       <div id="text-panel">
         <div id="text-container"  contenteditable="true"></div>
-        <!-- <div id="text-container"  contenteditable="true"></div> -->
       </div>
 
     </div>

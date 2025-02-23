@@ -29,6 +29,7 @@ export class T {
   static PauseButtonId = 'pause-button';
   // static EditButtonId = 'edit-button';
   static SaveButtonId = 'save-button';
+  static SearchButtonId = 'search-button';
 
   static SettingsPanelId = 'settings-panel';
 
@@ -39,6 +40,9 @@ export class T {
   static SpeechInterlineId = 'speech-interline';
   static SpeechInterlineIconId = 'speech-interline-icon';
   static SpeechInterlinePauseId = 'speech-interline-pause';
+
+  static ZoomIconId = 'zoom-icon';
+  static UnzoomIconId = 'unzoom-icon';
 
 };
 
@@ -68,6 +72,7 @@ export class C /* Components */ {
   static pauseButton : HTMLElement;
   static editButton : HTMLElement;
   static saveButton : HTMLElement;
+  static searchButton : HTMLElement;
 
   static settingsPanel : HTMLElement;
 
@@ -78,6 +83,9 @@ export class C /* Components */ {
   static speechInterlineItem : HTMLElement;
   static speechInterlineIcon : HTMLElement;
   static speechInterlinePause : HTMLInputElement;
+
+  static zoomIcon : HTMLButtonElement;
+  static unzoomIcon : HTMLButtonElement;
 
   static assignComponents() {
     C.topPanel = document.getElementById(T.TopPanelId)!;
@@ -106,7 +114,8 @@ export class C /* Components */ {
     C.playButton = document.getElementById(T.PlayButtonId)!;
     C.pauseButton = document.getElementById(T.PauseButtonId)!;
     C.saveButton = document.getElementById(T.SaveButtonId)!;
-    
+    C.searchButton = document.getElementById(T.SearchButtonId)!;
+
     C.settingsPanel = document.getElementById(T.SettingsPanelId)!;
 
     C.speechSpeedItem = document.getElementById(T.SpeechSpeedId)!;
@@ -117,5 +126,7 @@ export class C /* Components */ {
     C.speechInterlineIcon = document.getElementById(T.SpeechInterlineIconId)!;
     C.speechInterlinePause = document.getElementById(T.SpeechInterlinePauseId)! as HTMLInputElement;
 
+    C.zoomIcon = document.getElementById(T.ZoomIconId)! as HTMLButtonElement;
+    C.unzoomIcon = document.getElementById(T.UnzoomIconId)! as HTMLButtonElement;
   }
 };

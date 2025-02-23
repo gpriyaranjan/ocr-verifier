@@ -81,8 +81,8 @@ body {
 }
 
 #image-hilite {
-
   top: 0;
+  left: 5vw;
   width: 90vw;
   height: 50px;
   pointer-events: none;
@@ -245,6 +245,7 @@ body {
   cursor: crosshair;
   background-repeat: no-repeat;
   overflow: hidden;
+  z-index: 2;
 }
 
 #magnified-image {
