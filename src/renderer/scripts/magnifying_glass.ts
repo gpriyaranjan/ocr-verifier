@@ -54,9 +54,11 @@ export class MagnifyingGlass {
   }
 
   static hide() {
-    // if (!this.enabled) return;
     this.magnifier.style.display = "none";    
-    // this.magnifiedImage.style.backgroundImage = "none";
+  }
+
+  static isVisible() {
+    return (this.magnifier.style.display == 'block');
   }
 
   static setDebug(str: string) {
@@ -92,7 +94,8 @@ export class MagnifyingGlass {
       this.magRadius, this.zoom, this.debug,
       this.magnifier, this.magnifiedImage );
 
-    this.show();
+    if (!this.isVisible())
+      this.show();
   
     if (this.debug) {
       this.debug = false;
@@ -142,8 +145,8 @@ function _showWithCenter(
   const bgCenterX = - imgCenterX * zoom;
   const bgCenterY = - imgCenterY * zoom;
 
-  const bgX = bgCenterX + 1 * magRadius;
-  const bgY = bgCenterY + 1 * magRadius;
+  const bgX = bgCenterX + 1.5 * magRadius;
+  const bgY = bgCenterY + 1.5 * magRadius;
 
   if (debug)
     console.log("bgX = ", bgX, " bgY = ", bgY);

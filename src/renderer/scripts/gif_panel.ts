@@ -14,7 +14,7 @@ export class GifPanel {
     C.imageDiv.style.display = 'block';
     C.imageHilite.style.display = 'block';
     MagnifyingGlass.enable();
-    C.magnifier.style.display = 'block';
+    MagnifyingGlass.showWithCorner(0, 0);
   }
 
   static setEventHandlers() {
