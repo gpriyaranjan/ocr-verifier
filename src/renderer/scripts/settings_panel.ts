@@ -20,9 +20,6 @@ export class SettingsPanel {
 
     this.addEnterHandler(C.speechInterlinePause);
     this.addBlurHandler(C.speechInterlinePause, () => SettingsPanel.onSpeechInterlinePauseSet());
-
-    C.zoomIcon.addEventListener('click', this.onMagnifierEnabled);
-    C.unzoomIcon.addEventListener('click', this.onMagnifierDisabled);
   }
 
   static onSpeechSpeedSet() {
@@ -63,6 +60,7 @@ export class SettingsPanel {
     })
   }
 
+  /*
   static onMagnifierEnabled() {
     console.log("Magnifying Glass enabled");
     MagnifyingGlass.setDiameter(C.imageHilite.clientHeight)
@@ -75,4 +73,5 @@ export class SettingsPanel {
     MagnifyingGlass.disable();
     MagnifyingGlass.hide();
   }
+  */
 }

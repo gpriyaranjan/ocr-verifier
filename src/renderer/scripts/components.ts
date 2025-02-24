@@ -41,9 +41,6 @@ export class T {
   static SpeechInterlineIconId = 'speech-interline-icon';
   static SpeechInterlinePauseId = 'speech-interline-pause';
 
-  static ZoomIconId = 'zoom-icon';
-  static UnzoomIconId = 'unzoom-icon';
-
 };
 
 export class C /* Components */ {
@@ -84,8 +81,6 @@ export class C /* Components */ {
   static speechInterlineIcon : HTMLElement;
   static speechInterlinePause : HTMLInputElement;
 
-  static zoomIcon : HTMLButtonElement;
-  static unzoomIcon : HTMLButtonElement;
 
   static assignComponents() {
     C.topPanel = document.getElementById(T.TopPanelId)!;
@@ -125,7 +120,5 @@ export class C /* Components */ {
     C.speechInterlineIcon = document.getElementById(T.SpeechInterlineIconId)!;
     C.speechInterlinePause = document.getElementById(T.SpeechInterlinePauseId)! as HTMLInputElement;
 
-    C.zoomIcon = document.getElementById(T.ZoomIconId)! as HTMLButtonElement;
-    C.unzoomIcon = document.getElementById(T.UnzoomIconId)! as HTMLButtonElement;
   }
 };

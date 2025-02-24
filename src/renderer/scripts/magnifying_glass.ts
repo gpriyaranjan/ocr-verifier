@@ -6,15 +6,14 @@ export class MagnifyingGlass {
   static setEventHandlers() {
     this.container.addEventListener("mouseleave", () => {
       this.hide();
+      this.disable();
     });
 
     this.container.addEventListener("mousemove", (e) => {
       this.showWithCenter(e.offsetX, e.offsetY);
     });
 
-    this.magnifier.addEventListener('click', (e) => this.setDebug("magnifier"));
-    this.magnifiedImage.addEventListener('click', (e) => this.setDebug("magnifiedImage"));
-    C.imageDiv.addEventListener('click', (e) => this.setDebug("image"));
+    C.imageDiv.addEventListener('dblclick', (e) => this.setDebug("image"));
   }
 
   static image : HTMLImageElement;
@@ -61,6 +60,15 @@ export class MagnifyingGlass {
     return (this.magnifier.style.display == 'block');
   }
 
+  static toggle() {
+    if (!this.isVisible()) {
+      this.enable();
+      this.show();
+    } else {
+      this.disable();
+      this.hide();
+    }
+  }
   static setDebug(str: string) {
     this.debug = true;
     console.log("Setting debugger ", str);
@@ -84,7 +92,8 @@ export class MagnifyingGlass {
       console.log(`showWithCenter(${magCenterX}, ${magCenterY})`);
 
     if (!this.enabled) {
-      console.log('Magnifying not enabled');
+      if (this.debug)
+        console.log('Magnifying not enabled');
       return;
     }
 
@@ -93,9 +102,6 @@ export class MagnifyingGlass {
       this.image, this.container.scrollTop, 
       this.magRadius, this.zoom, this.debug,
       this.magnifier, this.magnifiedImage );
-
-    if (!this.isVisible())
-      this.show();
   
     if (this.debug) {
       this.debug = false;

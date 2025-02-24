@@ -13,12 +13,11 @@ export class GifPanel {
   static enable() {
     C.imageDiv.style.display = 'block';
     C.imageHilite.style.display = 'block';
-    MagnifyingGlass.enable();
-    MagnifyingGlass.showWithCorner(0, 0);
   }
 
   static setEventHandlers() {
     C.imageDiv.addEventListener('load', this.onImageLoadComplete);
+    C.imageContainer.addEventListener('click', this.toggleMagnifier);
   }
 
   static gifOffset = 0; // Offset in pixels
@@ -55,5 +54,11 @@ export class GifPanel {
     console.log("Image load complete");
     GifPanel.enable();
     GifPanel.scrollToLineNum(0);
+  }
+
+  static toggleMagnifier() {
+    console.log("GifPanel::toggleMagnifier from ", 
+      MagnifyingGlass.isVisible(), " to ", !MagnifyingGlass.isVisible());
+    MagnifyingGlass.toggle();
   }
 }
