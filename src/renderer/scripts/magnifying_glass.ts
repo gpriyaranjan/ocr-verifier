@@ -22,7 +22,7 @@ export class MagnifyingGlass {
   static container : HTMLDivElement;
 
   static enabled = false;
-  static magRadius = 60;
+  static magRadius = 30;
   static zoom = 2;
 
   static debug = false;
@@ -72,6 +72,8 @@ export class MagnifyingGlass {
   static setDebug(str: string) {
     this.debug = true;
     console.log("Setting debugger ", str);
+    this.enable();
+    console.log("Enabling ");
   }
 
   static print() {
@@ -92,8 +94,11 @@ export class MagnifyingGlass {
       console.log(`showWithCenter(${magCenterX}, ${magCenterY})`);
 
     if (!this.enabled) {
-      if (this.debug)
-        console.log('Magnifying not enabled');
+      if (this.debug) {
+        console.log('Magnifier not enabled');
+        this.debug = false;
+        console.log("Reset debugger ");         
+      }
       return;
     }
 
@@ -141,6 +146,7 @@ function _showWithCenter(
   const magnifierY = magCenterY - magRadius;
 
   if (debug) {
+    console.log("MagCenterX = " , magCenterX, "MagCenterY = ", magCenterY, "Mag radius = ", magRadius)
     console.log("MagnifierX = ", magnifierX, ", MagnifierY = ", magnifierY);
     console.log("imageX = ", imageX, " imageY = ", imageY);
   }
@@ -151,8 +157,8 @@ function _showWithCenter(
   const bgCenterX = - imgCenterX * zoom;
   const bgCenterY = - imgCenterY * zoom;
 
-  const bgX = bgCenterX + 1.5 * magRadius;
-  const bgY = bgCenterY + 1.5 * magRadius;
+  const bgX = bgCenterX + 1.0 * magRadius;
+  const bgY = bgCenterY + 1.0 * magRadius;
 
   if (debug)
     console.log("bgX = ", bgX, " bgY = ", bgY);
