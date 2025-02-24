@@ -2,7 +2,6 @@
 import {C} from "./components.js";
 import {VoiceUtils} from './voice_utils.js';
 
-import {MagnifyingGlass} from "./magnifying_glass.js";
 
 export class SettingsPanel {
 
@@ -56,22 +55,9 @@ export class SettingsPanel {
 
   static addBlurHandler(element : HTMLInputElement, handler : () => void ) {
     element.addEventListener('blur', function(event) {
+      event.stopPropagation();
       handler();
     })
   }
 
-  /*
-  static onMagnifierEnabled() {
-    console.log("Magnifying Glass enabled");
-    MagnifyingGlass.setDiameter(C.imageHilite.clientHeight)
-    MagnifyingGlass.enable();
-    MagnifyingGlass.show();
-  }
-
-  static onMagnifierDisabled() {
-    console.log("Magnifying Glass disabled");
-    MagnifyingGlass.disable();
-    MagnifyingGlass.hide();
-  }
-  */
 }
