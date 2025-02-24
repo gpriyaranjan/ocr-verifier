@@ -1,5 +1,6 @@
-import * as fs from 'fs/promises'
-import * as path from 'path'
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import * as os from 'os';
 
 import {getIpcMain} from "./ipc_main.js";
 const { BrowserWindow, dialog } = await getIpcMain();
@@ -11,11 +12,14 @@ function showMessage(message: string) {
 
 class FileChooserUtils {
 
+  static defaultDataDir = path.join(os.homedir(), 'Desktop', 'mth_infotech');
+
   static async selectDirectory() {
     console.log("Opening directory");
     const mainWindow = BrowserWindow.getFocusedWindow(); // Get the focused window
     const result = await dialog.showOpenDialog(mainWindow!, {
-      properties: ['openDirectory']
+      properties: ['openDirectory'],
+      defaultPath: this.defaultDataDir
     });
   
     if (!result.canceled) {

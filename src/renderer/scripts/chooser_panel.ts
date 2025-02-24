@@ -20,6 +20,7 @@ export class ChooserPanel {
   static inIpcCall = true;
 
   static async onSelectDataDirClick() {
+
     if (this.inIpcCall) {
       console.log("ChooserPanel::onSelectDataDirClick - Already on another call");
       return;
@@ -30,7 +31,7 @@ export class ChooserPanel {
 
     const dataDir = await ipcRenderer.invoke('select-data-dir-request');
     this.inIpcCall = false;
-    
+
     console.log("Selected ", dataDir);
 
     if (!dataDir || !dataDir.length)
