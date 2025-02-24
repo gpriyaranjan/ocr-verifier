@@ -76,12 +76,6 @@ export class MagnifyingGlass {
     console.log("Enabling ");
   }
 
-  static print() {
-    console.log("MG = ", 
-      this.container, this.image, this.magnifier, this.magnifiedImage);
-    console.log("enabled = ", this.enabled);
-  }
-
   static showWithCorner(leftX: number, topY: number) {
     if (this.debug)
       console.log(`showWithCorner(${leftX}, ${topY})`);

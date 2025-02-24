@@ -17,7 +17,7 @@ export class GifPanel {
 
   static setEventHandlers() {
     C.imageDiv.addEventListener('load', this.onImageLoadComplete);
-    C.imageContainer.addEventListener('click', this.toggleMagnifier);
+    C.imageContainer.addEventListener('click', (e) => this.toggleMagnifier(e));
   }
 
   static gifOffset = 0; // Offset in pixels
@@ -56,9 +56,10 @@ export class GifPanel {
     GifPanel.scrollToLineNum(0);
   }
 
-  static toggleMagnifier() {
+  static toggleMagnifier(e : any) {
     console.log("GifPanel::toggleMagnifier from ", 
       MagnifyingGlass.isVisible(), " to ", !MagnifyingGlass.isVisible());
     MagnifyingGlass.toggle();
+    MagnifyingGlass.showWithCenter(e.offsetX, e.offsetY);
   }
 }
