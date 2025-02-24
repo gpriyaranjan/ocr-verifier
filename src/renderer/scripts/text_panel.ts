@@ -2,16 +2,17 @@ import { C, T } from './components.js';
 import { S } from './app_state.js';
 
 import { VoiceUtils } from './voice_utils.js';
-import { scrollOtherBar } from "./synchronized_panels.js";
+import { TopPanel } from "./top_panel.js";
 
 import {getIpcRenderer} from "./ipc_renderer.js";
+import { IconsPanel } from './icons_panel.js';
 const {ipcRenderer} = await getIpcRenderer();
 
 export class TextPanel {
 
   static setEventHandlers() {
     C.textContainer.addEventListener('input', TextPanel.syncText);
-    C.textContainer.addEventListener('scroll', scrollOtherBar);
+    C.textContainer.addEventListener('scroll', TopPanel.scrollOtherBar);
   }
 
   static syncText(event : Event) {
@@ -50,7 +51,7 @@ export class TextPanel {
   static onLineClick(lineDiv: HTMLInputElement) {
     TextPanel.hiliteLine(lineDiv);
     TextPanel.scrollToLine(Number(lineDiv.dataset.index));
-    scrollOtherBar();
+    TopPanel.scrollOtherBar();
     VoiceUtils.stopSpeaking();
   }
 
@@ -125,5 +126,6 @@ export class TextPanel {
     console.log("File contents are ", fileContents);
     TextPanel.clearTextPanel();
     TextPanel.populateTextPanel(fileContents);
+    IconsPanel.enable();
   }
 }

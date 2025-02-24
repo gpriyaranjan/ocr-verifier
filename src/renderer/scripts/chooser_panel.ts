@@ -4,13 +4,33 @@ import {S} from './app_state.js';
 import {getIpcRenderer} from "./ipc_renderer.js";
 const {ipcRenderer} = await getIpcRenderer();
 
-import {onSelectImageFilePath} from './synchronized_panels.js';
+import {TopPanel} from './top_panel.js';
 
 export class ChooserPanel {
 
+  static init() {
+    C.chooseImageFile.disabled = true;
+  }
+
+  static setEventHandlers() {
+    C.chooseDataDir.addEventListener('click', this.onSelectDataDirClick);
+    C.chooseImageFile.addEventListener('click', this.onSelectImageFileClick);
+  }
+
+  static inIpcCall = true;
+
   static async onSelectDataDirClick() {
+    if (this.inIpcCall) {
+      console.log("ChooserPanel::onSelectDataDirClick - Already on another call");
+      return;
+    }
+
     console.log('Making select-data-dir-request');
+    this.inIpcCall = true;
+
     const dataDir = await ipcRenderer.invoke('select-data-dir-request');
+    this.inIpcCall = false;
+    
     console.log("Selected ", dataDir);
 
     if (!dataDir || !dataDir.length)
@@ -18,7 +38,7 @@ export class ChooserPanel {
     
     S.dataDir = dataDir;
     C.dataDirPath.textContent = dataDir;
-    this.clearFilePaths();
+    ChooserPanel.clearFilePaths();
     C.chooseImageFile.focus();
     C.chooseImageFile.disabled = false;
   }
@@ -30,13 +50,21 @@ export class ChooserPanel {
   }
 
   static async onSelectImageFileClick() {
+
+    if (this.inIpcCall) {
+      console.log("ChooserPanel::onSelectImageFileClick - Already on another call");
+      return;
+    }
+
     console.log('Making select-image-file-path-request');
+    this.inIpcCall = true;
     // console.log("OcrOutputFilePath is ", C.ocrOutputFilePath);
   
     const dataDir = C.dataDirPath.textContent;
     const response  = await ipcRenderer.invoke('select-image-file-path-request', dataDir);
-    this.populateFilePathFields(response);
-    onSelectImageFilePath();
+    this.inIpcCall = false;
+    ChooserPanel.populateFilePathFields(response);
+    TopPanel.onSelectImageFilePath();
   }
 
   static populateFilePathFields(response : {
@@ -62,13 +90,5 @@ export class ChooserPanel {
     C.editedTextFileRelPath.textContent = editedTextFileRelPath;
     S.editedTextFileRelPath = editedTextFileRelPath;
 
-  }
-
-  static setEventHandlers() {
-    C.chooseDataDir.addEventListener('click', 
-        (event) => { this.onSelectDataDirClick()});
-
-    C.chooseImageFile.addEventListener('click',
-        (event) => { this.onSelectImageFileClick()});
   }
 }

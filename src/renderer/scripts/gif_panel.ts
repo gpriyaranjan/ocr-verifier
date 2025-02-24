@@ -1,7 +1,25 @@
 import { C } from "./components.js";
 import { S } from "./app_state.js";
+import { MagnifyingGlass } from "./magnifying_glass.js";
 
 export class GifPanel {
+
+  static init() {
+    C.imageDiv.style.display = 'none';
+    C.imageHilite.style.display = 'none';
+    C.magnifier.style.display = 'none';
+  }
+  
+  static enable() {
+    C.imageDiv.style.display = 'block';
+    C.imageHilite.style.display = 'block';
+    MagnifyingGlass.enable();
+    C.magnifier.style.display = 'block';
+  }
+
+  static setEventHandlers() {
+    C.imageDiv.addEventListener('load', this.onImageLoadComplete);
+  }
 
   static gifOffset = 0; // Offset in pixels
   static gifScale = 0.97;  // In percentage of the original height
@@ -35,10 +53,7 @@ export class GifPanel {
 
   static onImageLoadComplete() {
     console.log("Image load complete");
+    GifPanel.enable();
     GifPanel.scrollToLineNum(0);
-  }
-
-  static setEventHandlers() {
-    C.imageDiv.addEventListener('load', this.onImageLoadComplete);
   }
 }

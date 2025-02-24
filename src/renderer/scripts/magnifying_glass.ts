@@ -3,6 +3,20 @@ import { C } from './components.js';
 
 export class MagnifyingGlass {
 
+  static setEventHandlers() {
+    this.container.addEventListener("mouseleave", () => {
+      this.hide();
+    });
+
+    this.container.addEventListener("mousemove", (e) => {
+      this.showWithCenter(e.offsetX, e.offsetY);
+    });
+
+    this.magnifier.addEventListener('click', (e) => this.setDebug("magnifier"));
+    this.magnifiedImage.addEventListener('click', (e) => this.setDebug("magnifiedImage"));
+    C.imageDiv.addEventListener('click', (e) => this.setDebug("image"));
+  }
+
   static image : HTMLImageElement;
   static magnifier : HTMLDivElement;
   static magnifiedImage : HTMLDivElement;
@@ -40,7 +54,7 @@ export class MagnifyingGlass {
   }
 
   static hide() {
-    if (!this.enabled) return;
+    // if (!this.enabled) return;
     this.magnifier.style.display = "none";    
     // this.magnifiedImage.style.backgroundImage = "none";
   }
@@ -48,20 +62,6 @@ export class MagnifyingGlass {
   static setDebug(str: string) {
     this.debug = true;
     console.log("Setting debugger ", str);
-  }
-
-  static setEventHandlers() {
-    this.container.addEventListener("mouseleave", () => {
-      this.hide();
-    });
-
-    this.container.addEventListener("mousemove", (e) => {
-      this.showWithCenter(e.offsetX, e.offsetY);
-    });
-
-    this.magnifier.addEventListener('click', (e) => this.setDebug("magnifier"));
-    this.magnifiedImage.addEventListener('click', (e) => this.setDebug("magnifiedImage"));
-    C.imageDiv.addEventListener('click', (e) => this.setDebug("image"));
   }
 
   static print() {

@@ -9,6 +9,27 @@ import {VoiceUtils} from './voice_utils.js';
 
 export class IconsPanel {
 
+  static init() {
+    C.playButton.disabled = true;
+    C.pauseButton.disabled = true;
+    C.saveButton.disabled = true;
+    C.searchButton.disabled = true;
+  }
+
+  static setEventHandlers() {
+    C.playButton.addEventListener('click', this.onPlay);
+    C.pauseButton.addEventListener('click', this.onPause);
+    C.saveButton.addEventListener('click', this.onSave);
+    C.searchButton.addEventListener('click', this.onSearch);
+  }
+
+  static enable() {
+    C.playButton.disabled = false;
+    C.pauseButton.disabled = false;
+    C.saveButton.disabled = false;
+    C.searchButton.disabled = false;
+  }
+
   static async onPlay() {
 
     function hiliteNextLine() {
@@ -45,7 +66,6 @@ export class IconsPanel {
     VoiceUtils.stopSpeaking();
   }
 
-
   static async onSave() {
 
     const cur_lines = []
@@ -66,11 +86,4 @@ export class IconsPanel {
   static async onSearch() {
     console.log("Searching for ")
   } 
-
-  static setEventHandlers() {
-    C.playButton.addEventListener('click', this.onPlay);
-    C.pauseButton.addEventListener('click', this.onPause);
-    C.saveButton.addEventListener('click', this.onSave);
-    C.searchButton.addEventListener('click', this.onSearch);
-  }
 }

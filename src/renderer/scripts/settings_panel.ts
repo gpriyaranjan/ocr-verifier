@@ -6,6 +6,25 @@ import {MagnifyingGlass} from "./magnifying_glass.js";
 
 export class SettingsPanel {
 
+  static init() {
+    C.speechSpeedSpinBox.readOnly = true;
+    C.speechInterlinePause.readOnly = true;
+  }
+
+  static setEventHandlers() {
+
+    console.log("setSettingsPanelCallbacks called");
+
+    this.addEnterHandler(C.speechSpeedSpinBox);
+    this.addBlurHandler(C.speechSpeedSpinBox, () => SettingsPanel.onSpeechSpeedSet());
+
+    this.addEnterHandler(C.speechInterlinePause);
+    this.addBlurHandler(C.speechInterlinePause, () => SettingsPanel.onSpeechInterlinePauseSet());
+
+    C.zoomIcon.addEventListener('click', this.onMagnifierEnabled);
+    C.unzoomIcon.addEventListener('click', this.onMagnifierDisabled);
+  }
+
   static onSpeechSpeedSet() {
     const speechSpeed = C.speechSpeedSpinBox.value;
     console.log("Setting speechSpeed to ", speechSpeed)
@@ -55,19 +74,5 @@ export class SettingsPanel {
     console.log("Magnifying Glass disabled");
     MagnifyingGlass.disable();
     MagnifyingGlass.hide();
-  }
-
-  static setEventHandlers() {
-
-    console.log("setSettingsPanelCallbacks called");
-
-    this.addEnterHandler(C.speechSpeedSpinBox);
-    this.addBlurHandler(C.speechSpeedSpinBox, () => SettingsPanel.onSpeechSpeedSet());
-
-    this.addEnterHandler(C.speechInterlinePause);
-    this.addBlurHandler(C.speechInterlinePause, () => SettingsPanel.onSpeechInterlinePauseSet());
-
-    C.zoomIcon.addEventListener('click', this.onMagnifierEnabled);
-    C.unzoomIcon.addEventListener('click', this.onMagnifierDisabled);
   }
 }

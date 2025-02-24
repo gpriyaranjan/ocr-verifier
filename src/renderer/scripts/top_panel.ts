@@ -21,19 +21,24 @@ function activateToolTips() {
 async function onBodyLoad() {
   C.assignComponents();
 
+  SettingsPanel.init();
   SettingsPanel.setEventHandlers();
 
+  GifPanel.init();
   GifPanel.setEventHandlers();
+
   MagnifyingGlass.setContext();
   MagnifyingGlass.setEventHandlers();
 
+  ChooserPanel.init();
   ChooserPanel.setEventHandlers();
   
   VoiceUtils.listVoices();
+
+  IconsPanel.init();
   IconsPanel.setEventHandlers();
   
   TextPanel.setEventHandlers();
-
 }
 
 window.addEventListener('load', onBodyLoad);
@@ -48,17 +53,20 @@ function onDomParse() {
   });
 }
 
-export function scrollOtherBar() {
-  console.log('Scroll event triggered ', C.imageContainer.scrollTop, C.textContainer.scrollTop);
-  GifPanel.scrollToOffset(C.textContainer.scrollTop);
-}
+export class TopPanel {
 
-export async function onSelectImageFilePath() {
+  static scrollOtherBar() {
+    console.log('Scroll event triggered ', C.imageContainer.scrollTop, C.textContainer.scrollTop);
+    GifPanel.scrollToOffset(C.textContainer.scrollTop);
+  }
 
-  const imageFilePath = `${S.dataDir}/${S.imageFileRelPath}`;
-  GifPanel.loadImage(imageFilePath);
+  static async onSelectImageFilePath() {
 
-  const loadFilePath = `${S.dataDir}/${S.ocrOutputFileRelPath}`;
-  console.log("Loading text from ", loadFilePath)
-  TextPanel.loadFile(loadFilePath);
+    const imageFilePath = `${S.dataDir}/${S.imageFileRelPath}`;
+    GifPanel.loadImage(imageFilePath);
+  
+    const loadFilePath = `${S.dataDir}/${S.ocrOutputFileRelPath}`;
+    console.log("Loading text from ", loadFilePath)
+    TextPanel.loadFile(loadFilePath);
+  }
 }

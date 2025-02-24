@@ -70,11 +70,11 @@ export class C /* Components */ {
   static lineDivs : HTMLInputElement[];
 
   static iconPanel : HTMLElement;
-  static playButton : HTMLElement;
-  static pauseButton : HTMLElement;
-  static editButton : HTMLElement;
-  static saveButton : HTMLElement;
-  static searchButton : HTMLElement;
+  static playButton : HTMLButtonElement;
+  static pauseButton : HTMLButtonElement;
+  static editButton : HTMLButtonElement;
+  static saveButton : HTMLButtonElement;
+  static searchButton : HTMLButtonElement;
 
   static settingsPanel : HTMLElement;
 
@@ -114,10 +114,10 @@ export class C /* Components */ {
     C.lineDivs = []
   
     C.iconPanel = document.getElementById(T.IconPanelId)!;
-    C.playButton = document.getElementById(T.PlayButtonId)!;
-    C.pauseButton = document.getElementById(T.PauseButtonId)!;
-    C.saveButton = document.getElementById(T.SaveButtonId)!;
-    C.searchButton = document.getElementById(T.SearchButtonId)!;
+    C.playButton = document.getElementById(T.PlayButtonId)! as HTMLButtonElement;
+    C.pauseButton = document.getElementById(T.PauseButtonId)! as HTMLButtonElement;
+    C.saveButton = document.getElementById(T.SaveButtonId)! as HTMLButtonElement;
+    C.searchButton = document.getElementById(T.SearchButtonId)! as HTMLButtonElement;
 
     C.settingsPanel = document.getElementById(T.SettingsPanelId)!;
 
