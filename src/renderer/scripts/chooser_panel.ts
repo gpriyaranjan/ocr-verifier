@@ -8,47 +8,12 @@ import {TopPanel} from './top_panel.js';
 
 export class ChooserPanel {
 
-  static init() {
-    C.chooseImageFile.disabled = true;
-  }
 
   static setEventHandlers() {
-    C.chooseDataDir.addEventListener('click', this.onSelectDataDirClick);
     C.chooseImageFile.addEventListener('click', this.onSelectImageFileClick);
   }
 
   static inIpcCall = true;
-
-  static async onSelectDataDirClick() {
-
-    if (this.inIpcCall) {
-      console.log("ChooserPanel::onSelectDataDirClick - Already on another call");
-      return;
-    }
-
-    console.log('Making select-data-dir-request');
-    this.inIpcCall = true;
-
-    const dataDir = await ipcRenderer.invoke('select-data-dir-request');
-    this.inIpcCall = false;
-
-    console.log("Selected ", dataDir);
-
-    if (!dataDir || !dataDir.length)
-      return;
-    
-    S.dataDir = dataDir;
-    C.dataDirPath.textContent = dataDir;
-    ChooserPanel.clearFilePaths();
-    C.chooseImageFile.focus();
-    C.chooseImageFile.disabled = false;
-  }
-
-  static clearFilePaths() {
-    C.imageFilePath.textContent = "";
-    C.ocrOutputFilePath.textContent = "";
-    C.editedTextFileRelPath.textContent = "";
-  }
 
   static async onSelectImageFileClick() {
 
@@ -61,25 +26,29 @@ export class ChooserPanel {
     this.inIpcCall = true;
     // console.log("OcrOutputFilePath is ", C.ocrOutputFilePath);
   
-    const dataDir = C.dataDirPath.textContent;
-    const response  = await ipcRenderer.invoke('select-image-file-path-request', dataDir);
+    const response  = await ipcRenderer.invoke('select-image-file-path-request');
+    console.log("Response is ", response);
     this.inIpcCall = false;
     ChooserPanel.populateFilePathFields(response);
     TopPanel.onSelectImageFilePath();
   }
 
   static populateFilePathFields(response : {
+    dataDir : string,
     imageFileRelPath: string;
     ocrOutputFileRelPath: string;
     editedTextFileRelPath: string;
   }) {
 
-    const {imageFileRelPath, ocrOutputFileRelPath, editedTextFileRelPath} = response;
+    const {dataDir, imageFileRelPath, ocrOutputFileRelPath, editedTextFileRelPath} = response;
     console.log("ImageFile is ", imageFileRelPath);
 
-    if (imageFileRelPath == null)
+    if (dataDir == null)
       return;
 
+    S.dataDir = dataDir;
+    
+    C.dataDirPath.textContent = dataDir;
     C.imageFilePath.textContent = imageFileRelPath;
     S.imageFileRelPath = imageFileRelPath;
     

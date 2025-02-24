@@ -12,25 +12,7 @@ function showMessage(message: string) {
 
 class FileChooserUtils {
 
-  static defaultDataDir = path.join(os.homedir(), 'Desktop', 'mth_infotech');
-
-  static async selectDirectory() {
-    console.log("Opening directory");
-    const mainWindow = BrowserWindow.getFocusedWindow(); // Get the focused window
-    const result = await dialog.showOpenDialog(mainWindow!, {
-      properties: ['openDirectory'],
-      defaultPath: this.defaultDataDir
-    });
-  
-    if (!result.canceled) {
-      const selectedDirectory = result.filePaths[0];
-      return selectedDirectory;
-    } else {
-      return null;
-    }
-  }
-
-  static async selectFile(suggestedPath: string) {
+  static async selectFile(suggestedPath : string) {
     console.log("Opening file");
     const mainWindow = BrowserWindow.getFocusedWindow(); // Get the focused window
     const result = await dialog.showOpenDialog(mainWindow!, {
@@ -101,30 +83,34 @@ class FileUtils {
   }
 }
 
-export async function selectDataDir() {
-  
-  const selectedDir = await FileChooserUtils.selectDirectory();
-  if (!selectedDir) {
-    showMessage('Directory not selected');
-    return null;
-  }
+async function verifyDataDir(dataDir: string) {
 
-  const missingDirs = await FileUtils.getMissingDirs(selectedDir);
+  const missingDirs = await FileUtils.getMissingDirs(dataDir);
   if (missingDirs.length > 0) {
-    showMessage(`${selectedDir} Missing sub-dirs ${missingDirs} `)
+    showMessage(`${dataDir} Missing sub-dirs ${missingDirs} `)
     return null;
   }
-  return selectedDir;
+  return dataDir;
 }
 
-export async function selectImageFilePath(dataDir : string) {
+const defaultDataDir = path.join(os.homedir(), 'Desktop', 'mth_infotech');
 
-  const imagesDir = path.join(dataDir, FileUtils.ImagesDir);
+export async function selectImageFilePath() {
+
+  const imagesDir = path.join(defaultDataDir, FileUtils.ImagesDir);
   const imageFilePath = await FileChooserUtils.selectFile(imagesDir);
   if (!imageFilePath) {
     showMessage("Image File not selected");
     return null;
   }
+
+  const candidateDataDir : string = path.dirname(path.dirname(imageFilePath));
+  console.log("Candidate data directory is ", candidateDataDir);
+
+  const dataDir : (string|null) = await verifyDataDir(candidateDataDir);
+  if (!dataDir)
+    return;
+  console.log("Data directory is ", dataDir);
 
   const imageFileRelPath = path.relative(dataDir, imageFilePath);
 
@@ -147,11 +133,14 @@ export async function selectImageFilePath(dataDir : string) {
     ocrOutputFileRelPath = editedTextFileRelPath;
   }
 
-  return {
+  const retObj = {
+    'dataDir' : dataDir,
     'imageFileRelPath' : imageFileRelPath,
     'ocrOutputFileRelPath' : ocrOutputFileRelPath,
     'editedTextFileRelPath' : editedTextFileRelPath
   }
+  console.log(retObj);
+  return retObj;
 }
 
 export async function saveFile(dataDir : string, fileRelPath : string, fileContents : string) {

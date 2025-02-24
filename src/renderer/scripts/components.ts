@@ -2,7 +2,6 @@ export class T {
   static TopPanelId = 'top-panel';
 
   static chooserPanelId = 'chooser-panel';
-  static chooseDataDirId = 'choose-data-dir';
   static dataDirPathId = 'data-dir-path';
   static chooseImageFileId = 'choose-image-file';
   static imageFilePathId = 'image-file-path';
@@ -51,9 +50,8 @@ export class C /* Components */ {
   static topPanel : HTMLElement;
 
   static chooserPanel : HTMLElement;
-  static chooseDataDir : HTMLButtonElement;
-  static dataDirPath : HTMLElement;
   static chooseImageFile : HTMLButtonElement;
+  static dataDirPath : HTMLElement;
   static imageFilePath : HTMLElement;
   static ocrOutputFilePath : HTMLElement;
   static editedTextFileRelPath : HTMLElement;
@@ -94,10 +92,8 @@ export class C /* Components */ {
   
     C.chooserPanel = document.getElementById(T.chooserPanelId)!;
 
-    C.chooseDataDir = document.getElementById(T.chooseDataDirId)! as HTMLButtonElement;
-    C.dataDirPath = document.getElementById(T.dataDirPathId)!;
-
     C.chooseImageFile = document.getElementById(T.chooseImageFileId)! as HTMLButtonElement;
+    C.dataDirPath = document.getElementById(T.dataDirPathId)!;
     C.imageFilePath = document.getElementById(T.imageFilePathId)!;
     C.ocrOutputFilePath = document.getElementById(T.ocrOutputFilePathId)!;
     C.editedTextFileRelPath = document.getElementById(T.editedTextFileRelPathId)!;

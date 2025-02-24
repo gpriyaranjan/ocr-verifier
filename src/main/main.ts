@@ -1,7 +1,6 @@
 // import { app, BrowserWindow, ipcMain, dialog, screen } from 'electron'
 
-
-import {selectDataDir, selectImageFilePath, saveFile, readFile} from './file_utils.js';
+import {selectImageFilePath, saveFile, readFile} from './file_utils.js';
 
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -50,17 +49,9 @@ app.whenReady().then( () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow(); // Recreate window on macOS
   });
 
-  ipcMain.handle('select-data-dir-request', async (event: any) => {
+  ipcMain.handle('select-image-file-path-request', async (event: any) => {
     try {
-      return await selectDataDir();
-    } catch(ex : unknown) {
-      showMessage("Exception received " /* + ex.stack */);
-    }
-  });
-
-  ipcMain.handle('select-image-file-path-request', async (event: any, suggestedPath: string) => {
-    try {
-      const result = await selectImageFilePath(suggestedPath);
+      const result = await selectImageFilePath();
       return result;
     } catch(ex : unknown) {
       showMessage("Exception received " /* + ex.stack */);

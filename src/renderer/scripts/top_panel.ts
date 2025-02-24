@@ -30,7 +30,6 @@ async function onBodyLoad() {
   MagnifyingGlass.setContext();
   MagnifyingGlass.setEventHandlers();
 
-  ChooserPanel.init();
   ChooserPanel.setEventHandlers();
   
   VoiceUtils.listVoices();
